@@ -47,6 +47,7 @@ const FilterModal = ({
     if (size.length > 0) params.size = size.join(",");
 
     router.setParams(params);
+    setModalVisible(false);
   };
 
   const pathname = usePathname();
@@ -59,6 +60,7 @@ const FilterModal = ({
     setSize([]);
 
     router.replace(pathname as any);
+    setModalVisible(false);
   };
 
   const setSizes = (val: Size) => {
