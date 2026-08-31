@@ -20,3 +20,7 @@ export const getWishlist = async ({
     return [];
   }
 };
+
+export const getWishlistitem = async ({ id }: { id: string }) => {
+  return (await api.get("/wishlist/" + id)).data;
+};
