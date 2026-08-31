@@ -1,5 +1,6 @@
 import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
+import { Link } from "expo-router";
 import { Fragment } from "react";
 import { ActivityIndicator, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -82,21 +83,25 @@ const WishlistView = ({
               return (
                 <Fragment key={i._id}>
                   {i.type === "clothes" ? (
-                    <ClothesItem
-                      color={i.color}
-                      name={i.name}
-                      season={i.season}
-                      size={i.size}
-                      brand={i.brand}
-                      image={i.image}
-                    />
+                    <Link href={("/wishlist/" + i._id) as any}>
+                      <ClothesItem
+                        color={i.color}
+                        name={i.name}
+                        season={i.season}
+                        size={i.size}
+                        brand={i.brand}
+                        image={i.image}
+                      />
+                    </Link>
                   ) : (
-                    <OutfitItem
-                      clothes={i.clothes}
-                      name={i.name}
-                      season={i.season}
-                      image={i.image}
-                    />
+                    <Link href={("/wishlist/" + i._id) as any}>
+                      <OutfitItem
+                        clothes={i.clothes}
+                        name={i.name}
+                        season={i.season}
+                        image={i.image}
+                      />
+                    </Link>
                   )}
                 </Fragment>
               );
