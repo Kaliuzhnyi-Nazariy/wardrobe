@@ -23,7 +23,9 @@ const Sizes = ({
             style={[
               clothesStyles.sizesButton,
               size === item && clothesStyles.sizesButtonActive,
-              size?.includes(item) && clothesStyles.sizesButtonActive,
+              Array.isArray(size) &&
+                size?.some((s) => s == item) &&
+                clothesStyles.sizesButtonActive,
             ]}
             onPress={() => setSize(item)}
           >
@@ -31,7 +33,9 @@ const Sizes = ({
               style={[
                 clothesStyles.sizesButtonText,
                 size === item && clothesStyles.sizesButtonTextActive,
-                size?.includes(item) && clothesStyles.sizesButtonActive,
+                Array.isArray(size) &&
+                  size?.some((s) => s == item) &&
+                  clothesStyles.sizesButtonActive,
               ]}
             >
               {item}
