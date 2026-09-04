@@ -100,6 +100,7 @@ const WishlistView = ({
                         name={i.name}
                         season={i.season}
                         image={i.image}
+                        moveIsAble={i.clothes.every((c) => c.isOwned === true)}
                       />
                     </Link>
                   )}
