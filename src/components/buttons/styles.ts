@@ -76,3 +76,18 @@ export const updateFormButtonsStyles = StyleSheet.create({
     color: colors.card,
   },
 });
+
+export const addToWardrobeButton = StyleSheet.create({
+  addToWardrobe: {
+    backgroundColor: colors.accent,
+    borderWidth: 1,
+    borderColor: colors.secondary,
+    alignItems: "center",
+    alignContent: "center",
+    marginTop: 16,
+  },
+  addToWardrobeButtonText: {
+    color: colors.secondary,
+    fontWeight: 700,
+  },
+});
