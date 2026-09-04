@@ -21,6 +21,11 @@ const Colors = ({
   const [inputColor, setInputColor] = useState("");
 
   const handleColorInput = () => {
+    if (inputColor.trim().length === 0) {
+      setInputColor("");
+      return;
+    }
+
     if (!color.includes(inputColor)) {
       setColors([...color, inputColor]);
     }
