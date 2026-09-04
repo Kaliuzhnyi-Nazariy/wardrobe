@@ -2,33 +2,38 @@ import { Season } from "@/features/clothes/interface";
 import { Image } from "expo-image";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
-import { clothesStyles } from "../clothes/style";
+import Card from "../card/Card";
+import { cardStyles } from "../card/styles";
+import { ClothesItem } from "./interface";
 
 const OutfitItem = ({
   image,
   name,
   season,
   clothes,
+  moveIsAble,
 }: {
   image?: string;
   name: string;
   season: Season[];
-  clothes: { _id: string; name: string }[];
+  clothes: ClothesItem[];
+  moveIsAble?: boolean;
 }) => {
+  console.log({ name, moveIsAble });
   return (
-    <View style={[clothesStyles.card]}>
+    <Card moveIsAble={moveIsAble}>
       {image ? (
         <Image
           source={image}
-          style={[clothesStyles.imageView, clothesStyles.image]}
+          style={[cardStyles.imageView, cardStyles.image]}
         />
       ) : (
-        <View style={[clothesStyles.imageView, clothesStyles.noImage]}>
-          <Text style={[clothesStyles.noImageText]}>No image</Text>
+        <View style={[cardStyles.imageView, cardStyles.noImage]}>
+          <Text style={[cardStyles.noImageText]}>No image</Text>
         </View>
       )}
 
-      <View style={[clothesStyles.dataContainer]}>
+      <View style={[cardStyles.dataContainer]}>
         <View
           style={{
             flexDirection: "row",
@@ -36,20 +41,22 @@ const OutfitItem = ({
             alignItems: "center",
           }}
         >
-          <View style={[clothesStyles.dataBlock]}>
-            <Text style={clothesStyles.name}>Name: </Text>
-            <Text style={clothesStyles.name}>{name}</Text>
+          <View style={[cardStyles.dataBlock]}>
+            <Text style={cardStyles.name}>Name: </Text>
+            <Text style={cardStyles.name} numberOfLines={1}>
+              {name}
+            </Text>
           </View>
         </View>
         <View>
-          <Text style={clothesStyles.data}>Season: </Text>
+          <Text style={cardStyles.data}>Season: </Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={clothesStyles.chirpList}
+            contentContainerStyle={cardStyles.chirpList}
           >
             {season.map((s) => (
-              <Text style={clothesStyles.chirp} key={s}>
+              <Text style={cardStyles.chirp} key={s}>
                 {s}
               </Text>
             ))}
@@ -57,21 +64,27 @@ const OutfitItem = ({
         </View>
 
         <View>
-          <Text style={clothesStyles.data}>Clothes: </Text>
+          <Text style={cardStyles.data}>Clothes: </Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={clothesStyles.chirpList}
+            contentContainerStyle={cardStyles.chirpList}
           >
             {clothes.map((c) => (
-              <Text style={clothesStyles.chirp} key={c._id}>
+              <Text
+                style={[
+                  cardStyles.chirp,
+                  !c.isOwned && cardStyles.clothesIsNotOwned,
+                ]}
+                key={c._id}
+              >
                 {c.name}
               </Text>
             ))}
           </ScrollView>
         </View>
       </View>
-    </View>
+    </Card>
   );
 };
 
