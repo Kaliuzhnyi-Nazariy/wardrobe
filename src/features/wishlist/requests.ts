@@ -24,3 +24,11 @@ export const getWishlist = async ({
 export const getWishlistitem = async ({ id }: { id: string }) => {
   return (await api.get("/wishlist/" + id)).data;
 };
+
+export const updateItemOwnership = async ({ id }: { id: string }) => {
+  return (await api.patch("/wishlist/" + id)).data;
+};
+
+export const deleteItem = async ({ id }: { id: string }) => {
+  return (await api.delete("/wishlist/" + id)).data;
+};
