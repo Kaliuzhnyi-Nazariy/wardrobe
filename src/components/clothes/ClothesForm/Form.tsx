@@ -1,13 +1,11 @@
 import { clothesItemStyles } from "@/app/clothes/clothesItem";
 import { styles } from "@/app/styles/global";
+import { addToWardrobeButton } from "@/components/buttons/styles";
 import UpdateFormButtons from "@/components/buttons/UpdateFormButtons";
 import { Season, Size } from "@/features/clothes/interface";
-import { deleteClothes, updateClothes } from "@/features/clothes/request";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
-import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { Image, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import InfoItem from "../../InfoItem";
 import Colors from "../AddModal/Colors";
 import Photos from "../AddModal/Photos";
@@ -24,7 +22,19 @@ export interface IClothesItem {
   brand: string;
 }
 
-const Form = ({ data }: { data: IClothesItem }) => {
+const Form = ({
+  data,
+  updateClothesItem,
+  deleteClothesById,
+  updateStatus = false,
+  updateStatusFn,
+}: {
+  data: IClothesItem;
+  updateClothesItem: (val: FormData) => void;
+  deleteClothesById: () => void;
+  updateStatus?: boolean;
+  updateStatusFn?: () => void;
+}) => {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
   const [colors, setColors] = useState<string[]>([]);
@@ -69,37 +79,37 @@ const Form = ({ data }: { data: IClothesItem }) => {
   //   setColors(colors.filter((c) => c !== color));
   // };
 
-  const client = useQueryClient();
-  const {
-    season: searchSeason,
-    name: search,
-    color: searchColor,
-    size: searchSize,
-  } = useLocalSearchParams<{
-    season?: string;
-    name?: string;
-    color?: string;
-    size?: string;
-  }>();
+  // const client = useQueryClient();
+  // const {
+  //   season: searchSeason,
+  //   name: search,
+  //   color: searchColor,
+  //   size: searchSize,
+  // } = useLocalSearchParams<{
+  //   season?: string;
+  //   name?: string;
+  //   color?: string;
+  //   size?: string;
+  // }>();
 
-  const { mutate: updateClothesItem, isPending } = useMutation({
-    mutationFn: (clothesData: FormData) =>
-      updateClothes({
-        id: data._id,
-        data: clothesData,
-      }),
+  // const { mutate: updateClothesItem, isPending } = useMutation({
+  //   mutationFn: (clothesData: FormData) =>
+  //     updateClothes({
+  //       id: data._id,
+  //       data: clothesData,
+  //     }),
 
-    onSuccess() {
-      client.invalidateQueries({
-        queryKey: ["getClothes", searchSeason, search, searchColor, searchSize],
-      });
-      handleModeChange();
-    },
-    onError(err) {
-      console.log(err);
-      return;
-    },
-  });
+  //   onSuccess() {
+  //     client.invalidateQueries({
+  //       queryKey: ["getClothes", searchSeason, search, searchColor, searchSize],
+  //     });
+  //     handleModeChange();
+  //   },
+  //   onError(err) {
+  //     console.log(err);
+  //     return;
+  //   },
+  // });
 
   const handleUpdate = async () => {
     const form = new FormData();
@@ -129,20 +139,21 @@ const Form = ({ data }: { data: IClothesItem }) => {
     }
     season.map((s) => form.append("season", s));
     form.append("size", size);
+    handleModeChange();
 
     updateClothesItem(form);
   };
 
-  const { mutate: deleteClothesById } = useMutation({
-    mutationFn: () => deleteClothes({ id: data._id }),
-    onSuccess() {
-      router.replace("/(tabs)/clothes");
-    },
-    onError(err) {
-      console.log(err);
-      return;
-    },
-  });
+  // const { mutate: deleteClothesById } = useMutation({
+  //   mutationFn: () => deleteClothes({ id: data._id }),
+  //   onSuccess() {
+  //     router.replace("/(tabs)/clothes");
+  //   },
+  //   onError(err) {
+  //     console.log(err);
+  //     return;
+  //   },
+  // });
 
   return (
     <ScrollView
@@ -238,6 +249,21 @@ const Form = ({ data }: { data: IClothesItem }) => {
           handleUpdate={handleUpdate}
           mode={mode}
         />
+
+        {updateStatus && mode === "review" && (
+          <Pressable
+            style={[styles.button, addToWardrobeButton.addToWardrobe]}
+            onPress={() => {
+              if (updateStatusFn) {
+                updateStatusFn();
+              }
+            }}
+          >
+            <Text style={addToWardrobeButton.addToWardrobeButtonText}>
+              Add to wardrobe
+            </Text>
+          </Pressable>
+        )}
       </View>
     </ScrollView>
   );

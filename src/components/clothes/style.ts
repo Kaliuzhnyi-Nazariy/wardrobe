@@ -89,60 +89,65 @@ export const clothesStyles = StyleSheet.create({
     height: 165,
     flexDirection: "row",
   },
-  imageView: {
-    width: 120,
-    height: "100%",
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
-  },
-  image: {
-    width: 120,
-    height: "100%",
-  },
-  noImage: {
-    backgroundColor: colors.secondary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  noImageText: {
-    color: colors.card,
-  },
-  dataContainer: {
-    flex: 1,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    gap: 8,
-  },
-  dataBlock: {
-    flexDirection: "row",
-  },
-  name: {
-    fontWeight: 700,
-    color: colors.primary,
-  },
-  data: {
-    fontSize: 12,
-    color: colors.primary,
-    opacity: 0.7,
-  },
-  chirpList: {
-    flexDirection: "row",
-    gap: 4,
-    alignItems: "center",
-    marginTop: 4,
-    flexWrap: "wrap",
-  },
-  chirp: {
-    backgroundColor: colors.chips,
-    color: colors.card,
-    textTransform: "capitalize",
-    paddingVertical: 2,
-    paddingHorizontal: 8,
-    borderRadius: 8,
-  },
-  size: {
-    textTransform: "uppercase",
-  },
+  // imageView: {
+  //   width: 120,
+  //   height: "100%",
+  //   borderTopLeftRadius: 8,
+  //   borderBottomLeftRadius: 8,
+  // },
+  // image: {
+  //   width: 120,
+  //   height: "100%",
+  // },
+  // noImage: {
+  //   backgroundColor: colors.secondary,
+  //   alignItems: "center",
+  //   justifyContent: "center",
+  // },
+  // noImageText: {
+  //   color: colors.card,
+  // },
+  // dataContainer: {
+  //   flex: 1,
+  //   paddingHorizontal: 16,
+  //   paddingVertical: 8,
+  //   gap: 8,
+  // },
+  // dataBlock: {
+  //   flexDirection: "row",
+  //   width: "80%",
+  //   paddingRight: 8,
+  // },
+  // name: {
+  //   fontWeight: 700,
+  //   color: colors.primary,
+  // },
+  // data: {
+  //   fontSize: 12,
+  //   color: colors.primary,
+  //   opacity: 0.7,
+  // },
+  // chirpList: {
+  //   flexDirection: "row",
+  //   gap: 4,
+  //   alignItems: "center",
+  //   marginTop: 4,
+  //   flexWrap: "wrap",
+  // },
+  // chirp: {
+  //   backgroundColor: colors.chips,
+  //   color: colors.card,
+  //   textTransform: "capitalize",
+  //   paddingVertical: 2,
+  //   paddingHorizontal: 8,
+  //   borderRadius: 8,
+  // },
+  // clothesIsNotOwned: {
+  //   backgroundColor: colors.accent,
+  // },
+  // size: {
+  //   textTransform: "uppercase",
+  // },
 
   // colors input
   inlineRow: {
@@ -181,7 +186,7 @@ export const clothesStyles = StyleSheet.create({
   },
   colorInput: { flex: 1, marginBottom: 0, marginTop: 4 },
 
-  // season
+  // // season
   seasonsList: { flexDirection: "row", flexWrap: "wrap", gap: 8, marginTop: 4 },
   seasonsButton: {
     width: "48%",
