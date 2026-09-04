@@ -1,7 +1,7 @@
 import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { addClothes } from "@/features/clothes/request";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
@@ -44,6 +44,8 @@ export const ChooseClothesInOutfit = ({
 
   const handleClose = () => setChosenMethod(undefined);
 
+  const client = useQueryClient();
+
   const { mutate: addWishClothes, isPending } = useMutation({
     mutationFn: (clothesData: FormData) => addClothes(clothesData),
     onSuccess(data: { data: ClothesItem }) {
@@ -51,28 +53,36 @@ export const ChooseClothesInOutfit = ({
       handleClose();
       setClothes((prev) => [
         ...prev,
-        { _id: data.data._id, name: data.data.name },
+        {
+          _id: data.data._id,
+          name: data.data.name,
+          isOwned: data.data.isOwned,
+        },
       ]);
+      client.invalidateQueries({ queryKey: ["getWishlist"] });
+    },
+    onError(err, _, res) {
+      console.log(err);
+      console.log(res);
     },
   });
+
+  const isAddingDisable =
+    newClothesName.length == 0 ||
+    !newClothesSize ||
+    newClothesSeasons.length === 0 ||
+    newClothesColors.length === 0;
 
   const handleClothesSubmit = () => {
     const formData = new FormData();
 
-    if (
-      !newClothesBrand ||
-      !newClothesName ||
-      !newClothesSize ||
-      newClothesSeasons.length === 0 ||
-      newClothesColors.length === 0
-    )
-      return;
+    if (isAddingDisable) return;
 
     formData.append("name", newClothesName);
     formData.append("brand", newClothesBrand);
-    formData.append("size", newClothesSize);
+    formData.append("size", newClothesSize!);
 
-    newClothesColors.forEach((cc) => formData.append("colors", cc));
+    newClothesColors.forEach((cc) => formData.append("color", cc));
     newClothesSeasons.forEach((cs) => formData.append("season", cs));
 
     if (newClothesImage) {
@@ -191,10 +201,12 @@ export const ChooseClothesInOutfit = ({
                 <View style={[wishlistStyles.btnContainer]}>
                   <Pressable
                     onPress={handleClothesSubmit}
+                    disabled={isAddingDisable}
                     style={({ pressed }) => [
                       styles.button,
                       wishlistStyles.btnAdd,
                       pressed && wishlistStyles.btnAddPressed,
+                      isAddingDisable && { opacity: 0.5 },
                     ]}
                   >
                     {({ pressed }) => (
