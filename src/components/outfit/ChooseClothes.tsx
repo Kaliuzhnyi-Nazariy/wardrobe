@@ -59,7 +59,23 @@ const ChooseClothes = ({
       {showList && (
         <>
           {selectedClothes.length > 0 ? (
-            <View style={addOutfitStyle.list}>
+            // <View style={addOutfitStyle.list}>
+            //   {selectedClothes.map(({ name, _id }) => (
+            //     <View key={_id} style={addOutfitStyle.chosenClothesItem}>
+            //       <Text style={addOutfitStyle.chosenClothesItemText}>
+            //         {name}
+            //       </Text>
+            //       <Pressable onPress={() => handleRemove({ id: _id })}>
+            //         <Text style={addOutfitStyle.chosenClothesItemText}>X</Text>
+            //       </Pressable>
+            //     </View>
+            //   ))}
+            // </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={addOutfitStyle.list}
+            >
               {selectedClothes.map(({ name, _id }) => (
                 <View key={_id} style={addOutfitStyle.chosenClothesItem}>
                   <Text style={addOutfitStyle.chosenClothesItemText}>
@@ -70,7 +86,7 @@ const ChooseClothes = ({
                   </Pressable>
                 </View>
               ))}
-            </View>
+            </ScrollView>
           ) : (
             <View style={addOutfitStyle.list}>
               <Text>Add clothes</Text>

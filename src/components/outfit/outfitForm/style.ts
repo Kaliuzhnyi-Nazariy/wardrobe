@@ -11,10 +11,15 @@ export const outfitStyle = StyleSheet.create({
   tag: {
     display: "flex",
     flexDirection: "row",
-    backgroundColor: colors.chips,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 15,
+  },
+  tagClothesOwned: {
+    backgroundColor: colors.chips,
+  },
+  tagClothesNotOwned: {
+    backgroundColor: colors.accent,
   },
   tagText: {
     fontSize: 14,

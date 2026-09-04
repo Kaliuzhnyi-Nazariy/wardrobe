@@ -1,16 +1,14 @@
 import { styles } from "@/app/styles/global";
+import { addToWardrobeButton } from "@/components/buttons/styles";
 import UpdateFormButtons from "@/components/buttons/UpdateFormButtons";
 import Photos from "@/components/clothes/AddModal/Photos";
 import Seasons from "@/components/clothes/AddModal/Seasons";
 import InfoItem from "@/components/InfoItem";
 import { Season } from "@/features/clothes/interface";
-import { deleteOutfirById, updateOutfit } from "@/features/outfit/requests";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Image } from "expo-image";
 import { ImagePickerAsset } from "expo-image-picker";
-import { router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Pressable, ScrollView, Text, View } from "react-native";
 import ChooseClothes from "../ChooseClothes";
 import { ClothesItem } from "../interface";
 import { outfitStyle } from "./style";
@@ -23,7 +21,21 @@ export interface IOutfit {
   clothes: ClothesItem[];
 }
 
-const Form = ({ data }: { data: IOutfit }) => {
+const Form = ({
+  data,
+  updateOutfitFn,
+  deleteOutfit,
+  updateStatus = false,
+  updateStatusFn,
+  moveDisabled,
+}: {
+  data: IOutfit;
+  updateOutfitFn: (val: FormData) => void;
+  deleteOutfit: () => void;
+  updateStatus?: boolean;
+  updateStatusFn?: () => void;
+  moveDisabled?: boolean;
+}) => {
   const [mode, setMode] = useState<"review" | "edit">("review");
 
   const updateMode = () => {
@@ -50,38 +62,38 @@ const Form = ({ data }: { data: IOutfit }) => {
     }
   }, [data]);
 
-  const client = useQueryClient();
+  // const client = useQueryClient();
 
-  const param = data._id;
+  // const param = data._id;
 
-  const { mutate: updateOutfitFn } = useMutation({
-    mutationFn: (newData: FormData) =>
-      updateOutfit({ data: newData, id: data._id }),
+  // const { mutate: updateOutfitFn } = useMutation({
+  //   mutationFn: (newData: FormData) =>
+  //     updateOutfit({ data: newData, id: data._id }),
 
-    onSuccess() {
-      client.invalidateQueries({ queryKey: ["getOutfitById", param] });
-    },
-  });
+  //   onSuccess() {
+  //     client.invalidateQueries({ queryKey: ["getOutfitById", param] });
+  //   },
+  // });
+  //
+  // const {
+  //   outfit_season: searchSeason,
+  //   outfit_name: searchName,
+  //   clothes: searchClothes,
+  // } = useLocalSearchParams<{
+  //   outfit_season?: string;
+  //   outfit_name?: string;
+  //   clothes?: string;
+  // }>();
 
-  const {
-    outfit_season: searchSeason,
-    outfit_name: searchName,
-    clothes: searchClothes,
-  } = useLocalSearchParams<{
-    outfit_season?: string;
-    outfit_name?: string;
-    clothes?: string;
-  }>();
-
-  const { mutate: deleteOutfit } = useMutation({
-    mutationFn: () => deleteOutfirById(data._id),
-    onSuccess() {
-      router.replace("/(tabs)/fits");
-      client.invalidateQueries({
-        queryKey: ["getOutfits", searchSeason, searchName, searchClothes],
-      });
-    },
-  });
+  // const { mutate: deleteOutfit } = useMutation({
+  //   mutationFn: () => deleteOutfirById(data._id),
+  //   onSuccess() {
+  //     router.replace("/(tabs)/fits");
+  //     client.invalidateQueries({
+  //       queryKey: ["getOutfits", searchSeason, searchName, searchClothes],
+  //     });
+  //   },
+  // });
 
   const handleUpdate = () => {
     const formData = new FormData();
@@ -104,6 +116,9 @@ const Form = ({ data }: { data: IOutfit }) => {
     updateOutfitFn(formData);
   };
 
+  // console.log("data in form: ", data.season);
+  // console.log(data.clothes.map((c) => c.isOwned));
+
   return (
     <ScrollView
       style={{ width: "100%", flex: 1 }}
@@ -113,7 +128,7 @@ const Form = ({ data }: { data: IOutfit }) => {
         paddingVertical: 32,
       }}
     >
-      <View style={styles.contentContainer}>
+      <View style={[styles.contentContainer]}>
         {image ? (
           <>
             {mode === "review" ? (
@@ -152,7 +167,10 @@ const Form = ({ data }: { data: IOutfit }) => {
             <Text style={styles.inputName}>Season</Text>
             <View style={outfitStyle.list}>
               {season.map((item, index) => (
-                <View key={index} style={outfitStyle.tag}>
+                <View
+                  key={index}
+                  style={[outfitStyle.tag, outfitStyle.tagClothesOwned]}
+                >
                   <Text style={outfitStyle.tagText}>{item}</Text>
                 </View>
               ))}
@@ -174,7 +192,15 @@ const Form = ({ data }: { data: IOutfit }) => {
                 <View style={outfitStyle.list}>
                   {clothes.map((c) => {
                     return (
-                      <View key={c._id} style={outfitStyle.tag}>
+                      <View
+                        key={c._id}
+                        style={[
+                          outfitStyle.tag,
+                          c.isOwned
+                            ? outfitStyle.tagClothesOwned
+                            : outfitStyle.tagClothesNotOwned,
+                        ]}
+                      >
                         <Text style={outfitStyle.tagText}>{c.name}</Text>
                       </View>
                     );
@@ -185,6 +211,7 @@ const Form = ({ data }: { data: IOutfit }) => {
           </>
         ) : (
           <ChooseClothes
+            isInWishlist={updateStatus}
             selectedClothes={clothes}
             setSelectedClothes={setClothes}
           />
@@ -196,6 +223,25 @@ const Form = ({ data }: { data: IOutfit }) => {
           handleUpdate={handleUpdate}
           mode={mode}
         />
+
+        {updateStatus && mode === "review" && (
+          <Pressable
+            style={[
+              styles.button,
+              addToWardrobeButton.addToWardrobe,
+              moveDisabled && { opacity: 0.5 },
+            ]}
+            onPress={() => {
+              if (updateStatusFn) {
+                updateStatusFn();
+              }
+            }}
+          >
+            <Text style={addToWardrobeButton.addToWardrobeButtonText}>
+              Add to wardrobe
+            </Text>
+          </Pressable>
+        )}
       </View>
     </ScrollView>
   );
