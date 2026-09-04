@@ -2,19 +2,19 @@ import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { addClothes } from "@/features/clothes/request";
 import { createOutfit } from "@/features/outfit/requests";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Brand from "../clothes/AddModal/Brand";
 import Colors from "../clothes/AddModal/Colors";
 import Name from "../clothes/AddModal/Name";
+import OperationModalButtons from "../clothes/AddModal/OperationModalButtons";
 import Photos from "../clothes/AddModal/Photos";
 import Seasons from "../clothes/AddModal/Seasons";
 import Sizes from "../clothes/AddModal/Sizes";
 import AddModalLayout from "../modals/AddModalLayout";
 import ModalComponent from "../modals/ModalComponent";
-import OperationButtons from "../modals/OperationButtons";
 import { ClothesItem } from "../outfit/interface";
 import { ChooseClothesInOutfit } from "./ChooseClothesInOutfit";
 import { wishlistStyles } from "./style";
@@ -64,6 +64,8 @@ const AddModal = ({
     setOutfitSeason([]);
   };
 
+  const client = useQueryClient();
+
   // submits
   const { mutate: addWishClothes, isPending } = useMutation({
     mutationFn: (clothesData: FormData) => addClothes(clothesData),
@@ -71,6 +73,7 @@ const AddModal = ({
       resetFields();
       setModalVisible(false);
       setMode(undefined);
+      client.invalidateQueries({ queryKey: ["getWishlist"] });
     },
   });
 
@@ -112,6 +115,7 @@ const AddModal = ({
       resetFields();
       setModalVisible(false);
       setMode(undefined);
+      client.invalidateQueries({ queryKey: ["getWishlist"] });
     },
   });
 
@@ -154,6 +158,20 @@ const AddModal = ({
     outfitName.length > 0 &&
     outfitSeason.length > 0 &&
     outfitClothes.length > 0;
+
+  const resetOutfitIsAvailable =
+    outfitName.length > 0 ||
+    outfitClothes.length > 0 ||
+    outfitSeason.length > 0 ||
+    !!outfitImage;
+
+  const resetClothesIsAvailable =
+    clothesName.length > 0 ||
+    clothesBrand.length > 0 ||
+    clothesSeason.length > 0 ||
+    !!clothesImage ||
+    clothesColor.length > 0 ||
+    !!clothesSize;
 
   return (
     <ModalComponent
@@ -229,9 +247,10 @@ const AddModal = ({
 
                   <Sizes size={clothesSize} setSize={setClothesSize} />
 
-                  <OperationButtons
+                  <OperationModalButtons
+                    isResetAvailable={resetClothesIsAvailable}
                     handleSubmit={handleClothesSubmit}
-                    setModalVisible={setModalVisible}
+                    resetFn={resetFields}
                     availabilty={clothesAvailability}
                   />
                 </>
@@ -253,9 +272,10 @@ const AddModal = ({
 
                   <Seasons season={outfitSeason} setSeason={setOutfitSeason} />
 
-                  <OperationButtons
+                  <OperationModalButtons
+                    isResetAvailable={resetOutfitIsAvailable}
                     handleSubmit={handleOutfitSubmit}
-                    setModalVisible={setModalVisible}
+                    resetFn={resetFields}
                     availabilty={outfitAvailability}
                   />
                 </>
