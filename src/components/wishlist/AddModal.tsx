@@ -40,6 +40,8 @@ const AddModal = ({
     null,
   );
 
+  const [linkToStore, setLinkToStore] = useState("");
+
   // outfit data
   const [outfitName, setOutfitName] = useState("");
   const [outfitClothes, setOutfitClohtes] = useState<ClothesItem[]>([]);
@@ -62,6 +64,7 @@ const AddModal = ({
     setOutfitImagePreview("");
     setOutfitName("");
     setOutfitSeason([]);
+    setLinkToStore("");
   };
 
   const client = useQueryClient();
@@ -105,6 +108,9 @@ const AddModal = ({
     }
 
     formData.append("isOwned", "false");
+
+    if (linkToStore.trim().length > 0)
+      formData.append("storeLink", linkToStore);
 
     addWishClothes(formData);
   };
@@ -246,6 +252,13 @@ const AddModal = ({
                   <Brand brand={clothesBrand} setBrand={setClothesBrand} />
 
                   <Sizes size={clothesSize} setSize={setClothesSize} />
+
+                  <Name
+                    title="Link to store"
+                    name={linkToStore}
+                    setName={setLinkToStore}
+                    placeholder="Enter the link"
+                  />
 
                   <OperationModalButtons
                     isResetAvailable={resetClothesIsAvailable}

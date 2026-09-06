@@ -37,6 +37,8 @@ export const ChooseClothesInOutfit = ({
   const [newClothesSeasons, setNewClothesSeason] = useState<Season[]>([]);
   const [newClothesSize, setNewClothesSize] = useState<Size>();
   const [newClothesColors, setNewClothesColors] = useState<string[]>([]);
+  const [newClothesLinkToStore, setNewClothesLinkToStore] =
+    useState<string>("");
 
   const [newClothesPreview, setNewClothesPreview] = useState("");
   const [newClothesImage, setNewClothesImage] =
@@ -197,6 +199,13 @@ export const ChooseClothesInOutfit = ({
                 <Brand brand={newClothesBrand} setBrand={setNewClothesBrand} />
 
                 <Sizes size={newClothesSize} setSize={setNewClothesSize} />
+
+                <Name
+                  title="Link to store"
+                  name={newClothesLinkToStore}
+                  setName={setNewClothesLinkToStore}
+                  placeholder="Enter the link"
+                />
 
                 <View style={[wishlistStyles.btnContainer]}>
                   <Pressable

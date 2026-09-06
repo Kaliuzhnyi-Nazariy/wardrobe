@@ -30,6 +30,7 @@ const AddModal = ({
   const [imagePreview, setImagePreview] = useState("");
   const [brand, setBrand] = useState("");
   const [size, setSize] = useState<Size>();
+  const [linkToStore, setLinkToStore] = useState("");
 
   const [inputColor, setInputColor] = useState("");
 
@@ -92,6 +93,7 @@ const AddModal = ({
       setSize(undefined);
       setInputColor("");
       setModalVisible(false);
+      setLinkToStore("");
       client.invalidateQueries({
         queryKey: ["getClothes", searchSeason, search, searchColor, searchSize],
       });
@@ -120,6 +122,9 @@ const AddModal = ({
       formData.append("season", s);
     });
     formData.append("isOwned", "true");
+
+    if (linkToStore.trim().length > 0)
+      formData.append("storeLink", linkToStore);
 
     mutate(formData);
   };
@@ -156,6 +161,13 @@ const AddModal = ({
         <Brand brand={brand} setBrand={setBrand} />
 
         <Sizes size={size} setSize={setSize} />
+
+        <Name
+          title="Link to store"
+          name={linkToStore}
+          setName={setLinkToStore}
+          placeholder="Enter the link"
+        />
       </AddModalLayout>
 
       <OperationButtons

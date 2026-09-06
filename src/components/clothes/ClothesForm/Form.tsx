@@ -20,6 +20,7 @@ export interface IClothesItem {
   season: Season[];
   size: Size;
   brand: string;
+  storeLink?: string;
 }
 
 const Form = ({
@@ -41,6 +42,7 @@ const Form = ({
   const [image, setImage] = useState("");
   const [season, setSeason] = useState<Season[]>([]);
   const [size, setSize] = useState<Size>();
+  const [storeLink, setStoreLink] = useState("");
 
   const [newImage, setNewImage] = useState<ImagePickerAsset | null>(null);
 
@@ -52,6 +54,7 @@ const Form = ({
       setImage(data.image || "");
       setSeason(data.season || []);
       setSize(data.size || "");
+      setStoreLink(data.storeLink || "none");
     }
   }, [data]);
 
@@ -139,6 +142,9 @@ const Form = ({
     }
     season.map((s) => form.append("season", s));
     form.append("size", size);
+
+    form.append("storeLink", storeLink);
+
     handleModeChange();
 
     updateClothesItem(form);
@@ -242,6 +248,14 @@ const Form = ({
           <Seasons season={season} setSeason={setSeason} />
           // <Seasons season={season} handleSeason={handleSeason} />
         )}
+
+        <InfoItem
+          data={storeLink}
+          label="Store link"
+          isLink
+          mode={mode}
+          setData={setStoreLink}
+        />
 
         <UpdateFormButtons
           deleteItem={deleteClothesById}
