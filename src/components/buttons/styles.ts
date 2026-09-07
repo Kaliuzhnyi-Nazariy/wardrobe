@@ -91,3 +91,13 @@ export const addToWardrobeButton = StyleSheet.create({
     fontWeight: 700,
   },
 });
+
+export const updateBtn = StyleSheet.create({
+  updBtn: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 12,
+    backgroundColor: colors.secondary,
+    marginTop: 16,
+  },
+});
