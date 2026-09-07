@@ -19,7 +19,7 @@ const OutfitItem = ({
   clothes: ClothesItem[];
   moveIsAble?: boolean;
 }) => {
-  console.log({ name, moveIsAble });
+  // console.log({ name, moveIsAble });
   return (
     <Card moveIsAble={moveIsAble}>
       {image ? (
