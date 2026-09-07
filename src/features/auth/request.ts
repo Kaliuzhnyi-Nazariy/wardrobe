@@ -43,3 +43,7 @@ export const signin = async ({ email, password }: ISignIn) => {
     return error;
   }
 };
+
+export const logout = async () => {
+  return (await api.post("/auth/logout")).data;
+};

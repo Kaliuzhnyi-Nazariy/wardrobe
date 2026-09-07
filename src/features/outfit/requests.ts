@@ -33,3 +33,7 @@ export const updateOutfit = async ({
 export const deleteOutfirById = async (id: string) => {
   return (await api.delete("/outfit/" + id)).data;
 };
+
+export const deleteAllOutfits = async () => {
+  return (await api.delete("/outfit/all")).data;
+};

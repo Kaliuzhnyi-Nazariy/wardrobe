@@ -41,3 +41,7 @@ export const updateClothes = async ({
 export const deleteClothes = async ({ id }: { id: string }) => {
   return (await api.delete("/clothes/" + id)).data;
 };
+
+export const deleteAllClothes = async () => {
+  return (await api.delete("/clothes/all")).data;
+};
