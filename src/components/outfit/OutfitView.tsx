@@ -4,6 +4,7 @@ import { Link } from "expo-router";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { clothesStyles } from "../clothes/style";
+import { ClothesItem } from "./interface";
 import OutfitItem from "./OutfitItem";
 import { outfitViewStyles } from "./style";
 
@@ -11,8 +12,9 @@ export interface IOutfit {
   _id: string;
   name: string;
   season: Season[];
-  clothes: { _id: string; name: string }[];
+  clothes: ClothesItem[];
   image?: string;
+  isOwned: boolean;
 }
 
 const OutfitView = ({
@@ -39,6 +41,7 @@ const OutfitView = ({
           display: "flex",
           flexDirection: "column",
           gap: 16,
+          flex: 1,
         }}
       >
         {outfits.length > 0 ? (
