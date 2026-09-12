@@ -7,6 +7,13 @@ export const api = axios.create({
   withCredentials: true,
 });
 
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    throw error;
+  },
+);
+
 // export const setHeader = (token: string) => {
 //   api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 // };
