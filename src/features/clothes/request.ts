@@ -21,7 +21,7 @@ export const getClothes = async ({
 };
 
 export const addClothes = async (data: FormData) => {
-  return await api.post("/clothes", data);
+  return (await api.post("/clothes", data)).data;
 };
 
 export const getClothesById = async (id: string) => {
