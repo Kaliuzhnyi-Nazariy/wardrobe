@@ -9,11 +9,13 @@ const Photos = ({
   imagePreview,
   setImage,
   setImagePreview,
+  loadingState,
 }: {
   image?: ImagePickerAsset | null;
   imagePreview?: string;
   setImage: (val: ImagePickerAsset | null) => void;
   setImagePreview: (val: string) => void;
+  loadingState: boolean;
 }) => {
   const pickImage = async () => {
     const permissionResult =
@@ -74,6 +76,7 @@ const Photos = ({
       <Text style={styles.inputName}>Clothing Photo</Text>
       <View style={{ flexDirection: "row", gap: 10, marginTop: 5 }}>
         <Pressable
+          disabled={loadingState}
           style={({ pressed }) => [
             clothesStyles.photoButton,
             pressed && clothesStyles.photoButtonPressed,
@@ -92,6 +95,7 @@ const Photos = ({
           )}
         </Pressable>
         <Pressable
+          disabled={loadingState}
           style={({ pressed }) => [
             clothesStyles.photoButton,
             pressed && clothesStyles.photoButtonPressed,

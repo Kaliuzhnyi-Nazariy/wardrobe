@@ -10,6 +10,7 @@ const Colors = ({
   // handleDeleteColor,
   color,
   setColors,
+  loadingState,
 }: {
   // inputColor: string;
   // setInputColor: (val: string) => void;
@@ -17,6 +18,7 @@ const Colors = ({
   // handleDeleteColor: (id: string) => void;
   color: string[];
   setColors: (val: string[]) => void;
+  loadingState: boolean;
 }) => {
   const [inputColor, setInputColor] = useState("");
 
@@ -42,12 +44,14 @@ const Colors = ({
       <Text style={styles.inputName}>Colors</Text>
       <View style={clothesStyles.inlineRow}>
         <TextInput
+          accessible={!loadingState}
           style={[styles.input, clothesStyles.colorInput]}
           value={inputColor}
           onChangeText={setInputColor}
           placeholder="Type a color..."
         />
         <Pressable
+          disabled={loadingState}
           style={[clothesStyles.addButton]}
           onPress={() => handleColorInput()}
         >

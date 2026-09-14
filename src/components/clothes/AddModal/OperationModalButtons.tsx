@@ -7,58 +7,66 @@ const OperationModalButtons = ({
   resetFn,
   availabilty,
   isResetAvailable,
+  loadingState,
 }: {
   handleSubmit: () => void;
   resetFn: (val: boolean) => void;
   availabilty?: boolean;
   isResetAvailable: boolean;
+  loadingState: boolean;
 }) => {
   return (
     <View style={buttonStyles.buttonGroup}>
-      <Pressable
-        disabled={!availabilty}
-        style={({ pressed }) => [
-          buttonStyles.button,
-          buttonStyles.addBtn,
-          pressed && buttonStyles.addBtnActive,
-          !availabilty && { opacity: 0.5 },
-        ]}
-        onPress={() => handleSubmit()}
-      >
-        {({ pressed }) => (
-          <Text
-            style={[
-              buttonStyles.textStyle,
-              buttonStyles.addBtnText,
-              pressed && buttonStyles.addBtnTextActive,
+      {loadingState ? (
+        <Text style={{ marginHorizontal: "auto" }}>Loaading</Text>
+      ) : (
+        <>
+          <Pressable
+            disabled={!availabilty || loadingState}
+            style={({ pressed }) => [
+              buttonStyles.button,
+              buttonStyles.addBtn,
+              pressed && buttonStyles.addBtnActive,
+              !availabilty && { opacity: 0.5 },
             ]}
+            onPress={() => handleSubmit()}
           >
-            Add
-          </Text>
-        )}
-      </Pressable>
-      <Pressable
-        disabled={!isResetAvailable}
-        style={({ pressed }) => [
-          buttonStyles.button,
-          buttonStyles.cancelBtn,
-          pressed && buttonStyles.cancelBtnActive,
-          !isResetAvailable && { opacity: 0.5 },
-        ]}
-        onPress={() => resetFn(false)}
-      >
-        {({ pressed }) => (
-          <Text
-            style={[
-              buttonStyles.textStyle,
-              buttonStyles.cancelBtnText,
-              pressed && buttonStyles.cancelBtnTextActive,
+            {({ pressed }) => (
+              <Text
+                style={[
+                  buttonStyles.textStyle,
+                  buttonStyles.addBtnText,
+                  pressed && buttonStyles.addBtnTextActive,
+                ]}
+              >
+                Add
+              </Text>
+            )}
+          </Pressable>
+          <Pressable
+            disabled={!isResetAvailable || loadingState}
+            style={({ pressed }) => [
+              buttonStyles.button,
+              buttonStyles.cancelBtn,
+              pressed && buttonStyles.cancelBtnActive,
+              !isResetAvailable && { opacity: 0.5 },
             ]}
+            onPress={() => resetFn(false)}
           >
-            Reset
-          </Text>
-        )}
-      </Pressable>
+            {({ pressed }) => (
+              <Text
+                style={[
+                  buttonStyles.textStyle,
+                  buttonStyles.cancelBtnText,
+                  pressed && buttonStyles.cancelBtnTextActive,
+                ]}
+              >
+                Reset
+              </Text>
+            )}
+          </Pressable>
+        </>
+      )}
     </View>
   );
 };

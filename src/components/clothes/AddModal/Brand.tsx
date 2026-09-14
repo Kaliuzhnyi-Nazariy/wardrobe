@@ -4,14 +4,17 @@ import { Text, TextInput, View } from "react-native";
 const Brand = ({
   brand,
   setBrand,
+  loadingState,
 }: {
   brand: string;
+  loadingState: boolean;
   setBrand: (val: string) => void;
 }) => {
   return (
     <View style={{ marginTop: 16 }}>
       <Text style={styles.inputName}>Brand</Text>
       <TextInput
+        accessible={!loadingState}
         style={[styles.input, { marginTop: 4 }]}
         value={brand}
         onChangeText={setBrand}

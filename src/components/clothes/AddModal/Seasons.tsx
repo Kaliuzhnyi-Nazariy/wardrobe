@@ -7,9 +7,11 @@ const Seasons = ({
   season,
   // handleSeason,
   setSeason,
+  loadingState,
 }: {
   season: readonly Season[];
   setSeason: (val: Season[]) => void;
+  loadingState: boolean;
 }) => {
   const handleSeason = (
     pickSeason: "winter" | "spring" | "fall" | "summer",
@@ -29,6 +31,7 @@ const Seasons = ({
       <View style={clothesStyles.seasonsList}>
         {seasons.map((seas) => (
           <Pressable
+            disabled={loadingState}
             key={seas}
             style={[
               clothesStyles.seasonsButton,

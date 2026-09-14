@@ -6,10 +6,12 @@ import { clothesStyles } from "../style";
 
 const Sizes = ({
   size,
+  loadingState,
   setSize,
 }: {
   size?: Size | Size[];
   setSize: (val: Size) => void;
+  loadingState: boolean;
 }) => {
   const sizes = ["s", "m", "l", "xl", "2xl", "3xl"] as const;
 
@@ -19,6 +21,7 @@ const Sizes = ({
       <View style={clothesStyles.sizesList}>
         {sizes.map((item) => (
           <Pressable
+            disabled={loadingState}
             key={item}
             style={[
               clothesStyles.sizesButton,
