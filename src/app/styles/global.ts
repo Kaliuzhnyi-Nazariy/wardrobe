@@ -60,4 +60,11 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+
+  headerForUpdPages: {
+    fontSize: 32,
+    fontWeight: 500,
+    color: colors.primary,
+    marginHorizontal: "auto",
+  },
 });
