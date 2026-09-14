@@ -4,9 +4,9 @@ import { Text, View } from "react-native";
 import { homeStyles } from "./styles";
 
 const HomeView = (data: {
-  userData: { name: string; email: string };
-  clothesCount: number;
-  outfitCount: number;
+  userData?: { name: string; email: string };
+  clothesCount?: number;
+  outfitCount?: number;
 }) => {
   return (
     <View style={[styles.container, styles.bg]}>
@@ -20,8 +20,12 @@ const HomeView = (data: {
           Wardrobe
         </Text>
         <View style={[homeStyles.dataContainer, homeStyles.userData]}>
-          <Text style={homeStyles.text}>Name: {data.userData.name}</Text>
-          <Text style={homeStyles.text}>Email: {data.userData.email}</Text>
+          <Text style={homeStyles.text}>
+            Name: {data.userData?.name ?? "no data"}
+          </Text>
+          <Text style={homeStyles.text}>
+            Email: {data.userData?.email ?? "no data"}
+          </Text>
         </View>
 
         <View style={homeStyles.data}>
