@@ -3,8 +3,10 @@ import { addToWardrobeButton } from "@/components/buttons/styles";
 import UpdateFormButtons from "@/components/buttons/UpdateFormButtons";
 import Photos from "@/components/clothes/AddModal/Photos";
 import Seasons from "@/components/clothes/AddModal/Seasons";
+import ErrorMessages from "@/components/ErrorMessages";
 import InfoItem from "@/components/InfoItem";
 import { Season } from "@/features/clothes/interface";
+import { IValidationError } from "@/helpers/interface";
 import { Image } from "expo-image";
 import { ImagePickerAsset } from "expo-image-picker";
 import { useEffect, useState } from "react";
@@ -19,6 +21,7 @@ export interface IOutfit {
   season: Season[];
   image?: string;
   clothes: ClothesItem[];
+  isOwned: boolean;
 }
 
 const Form = ({
@@ -28,6 +31,12 @@ const Form = ({
   updateStatus = false,
   updateStatusFn,
   moveDisabled,
+  loadingState,
+
+  mode,
+  handleModeChange,
+  messages,
+  clearErrors,
 }: {
   data: IOutfit;
   updateOutfitFn: (val: FormData) => void;
@@ -35,16 +44,22 @@ const Form = ({
   updateStatus?: boolean;
   updateStatusFn?: () => void;
   moveDisabled?: boolean;
-}) => {
-  const [mode, setMode] = useState<"review" | "edit">("review");
+  loadingState: boolean;
 
-  const updateMode = () => {
-    if (mode === "review") {
-      setMode("edit");
-    } else {
-      setMode("review");
-    }
-  };
+  mode?: "review" | "edit";
+  handleModeChange?: () => void;
+  messages: IValidationError[];
+  clearErrors: () => void;
+}) => {
+  // const [mode, setMode] = useState<"review" | "edit">("review");
+
+  // const updateMode = () => {
+  //   if (mode === "review") {
+  //     setMode("edit");
+  //   } else {
+  //     setMode("review");
+  //   }
+  // };
 
   const [name, setName] = useState("");
   const [season, setSeason] = useState<Season[]>([]);
@@ -98,6 +113,8 @@ const Form = ({
   const handleUpdate = () => {
     const formData = new FormData();
 
+    clearErrors();
+
     formData.append("name", name);
 
     season.forEach((s) => formData.append("season", s));
@@ -113,11 +130,10 @@ const Form = ({
       formData.append("sentImage", imagePreview);
     }
 
+    clearErrors();
+
     updateOutfitFn(formData);
   };
-
-  // console.log("data in form: ", data.season);
-  // console.log(data.clothes.map((c) => c.isOwned));
 
   return (
     <ScrollView
@@ -139,6 +155,7 @@ const Form = ({
               />
             ) : (
               <Photos
+                loadingState={loadingState}
                 setImage={setImage}
                 image={image}
                 setImagePreview={setImagePreview}
@@ -152,6 +169,7 @@ const Form = ({
               <View style={outfitStyle.noImage}></View>
             ) : (
               <Photos
+                loadingState={loadingState}
                 setImage={setImage}
                 image={image}
                 setImagePreview={setImagePreview}
@@ -161,7 +179,7 @@ const Form = ({
           </>
         )}
 
-        <InfoItem data={name} label="Name" mode={mode} setData={setName} />
+        <InfoItem data={name} label="Name" mode={mode!} setData={setName} />
         {mode === "review" ? (
           <View style={{ width: "100%", marginTop: 16 }}>
             <Text style={styles.inputName}>Season</Text>
@@ -177,7 +195,11 @@ const Form = ({
             </View>
           </View>
         ) : (
-          <Seasons season={season} setSeason={setSeason} />
+          <Seasons
+            loadingState={loadingState}
+            season={season}
+            setSeason={setSeason}
+          />
         )}
 
         {mode === "review" ? (
@@ -219,12 +241,12 @@ const Form = ({
 
         <UpdateFormButtons
           deleteItem={deleteOutfit}
-          handleModeChange={updateMode}
+          handleModeChange={() => handleModeChange && handleModeChange()}
           handleUpdate={handleUpdate}
-          mode={mode}
+          mode={mode!}
         />
 
-        {updateStatus && mode === "review" && (
+        {updateStatus && !data.isOwned && mode === "review" && (
           <Pressable
             style={[
               styles.button,
@@ -243,6 +265,8 @@ const Form = ({
           </Pressable>
         )}
       </View>
+
+      <ErrorMessages mt={16} messages={messages} />
     </ScrollView>
   );
 };

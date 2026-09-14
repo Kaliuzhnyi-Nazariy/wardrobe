@@ -1,16 +1,19 @@
 import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { addClothes } from "@/features/clothes/request";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 import Brand from "../clothes/AddModal/Brand";
 import Colors from "../clothes/AddModal/Colors";
 import Name from "../clothes/AddModal/Name";
 import Photos from "../clothes/AddModal/Photos";
 import Seasons from "../clothes/AddModal/Seasons";
 import Sizes from "../clothes/AddModal/Sizes";
+import ErrorMessages from "../ErrorMessages";
 import ChooseClothes from "../outfit/ChooseClothes";
 import { ClothesItem } from "../outfit/interface";
 import { wishlistStyles } from "./style";
@@ -19,13 +22,11 @@ export const ChooseClothesInOutfit = ({
   chosenClothes,
   setClothes,
   setClothesOpen,
-}: // handleClothesSubmit,
-// resetFields,
-{
+  handleClothesIsAble,
+}: {
+  handleClothesIsAble: boolean;
   chosenClothes: ClothesItem[];
   setClothes: React.Dispatch<React.SetStateAction<ClothesItem[]>>;
-  // handleClothesSubmit: () => void;
-  // resetFields: () => void;
   setClothesOpen?: (val: boolean) => void;
 }) => {
   const [chosenMethod, setChosenMethod] = useState<
@@ -48,24 +49,33 @@ export const ChooseClothesInOutfit = ({
 
   const client = useQueryClient();
 
+  const { messages, clearErrors, setError } = useErrorHandler();
+
   const { mutate: addWishClothes, isPending } = useMutation({
     mutationFn: (clothesData: FormData) => addClothes(clothesData),
-    onSuccess(data: { data: ClothesItem }) {
+    onSuccess(data: ClothesItem) {
+      // onSuccess(data: { data: ClothesItem }) {
       // resetFields();
+      // console.log(data._id);
       handleClose();
       setClothes((prev) => [
         ...prev,
         {
-          _id: data.data._id,
-          name: data.data.name,
-          isOwned: data.data.isOwned,
+          _id: data._id,
+          name: data.name,
+          isOwned: data.isOwned,
         },
       ]);
+      Toast.show({
+        type: "success",
+        text1: "Clothes item is added!",
+        position: "top",
+        visibilityTime: 3000,
+      });
       client.invalidateQueries({ queryKey: ["getWishlist"] });
     },
-    onError(err, _, res) {
-      console.log(err);
-      console.log(res);
+    onError(err) {
+      setError(err);
     },
   });
 
@@ -97,6 +107,8 @@ export const ChooseClothesInOutfit = ({
 
     formData.append("isOwned", "false");
 
+    clearErrors();
+
     addWishClothes(formData);
   };
 
@@ -120,6 +132,7 @@ export const ChooseClothesInOutfit = ({
         {!chosenMethod ? (
           <View style={wishlistStyles.btnContainer}>
             <Pressable
+              disabled={handleClothesIsAble}
               onPress={() => {
                 setChosenMethod("wardrobe");
                 if (setClothesOpen) setClothesOpen(true);
@@ -139,6 +152,7 @@ export const ChooseClothesInOutfit = ({
               )}
             </Pressable>
             <Pressable
+              disabled={handleClothesIsAble}
               onPress={() => {
                 setChosenMethod("new");
                 if (setClothesOpen) setClothesOpen(true);
@@ -176,15 +190,29 @@ export const ChooseClothesInOutfit = ({
         {chosenMethod && (
           <>
             {chosenMethod === "new" ? (
-              <>
-                <Name name={newClothesName} setName={setNewClothesName} />
+              <View
+                style={{
+                  borderTopWidth: 1,
+                  borderTopColor: "brown",
+                  borderBottomColor: "brown",
+                  borderBottomWidth: 1,
+                  paddingVertical: 16,
+                }}
+              >
+                <Name
+                  loadingState={isPending}
+                  name={newClothesName}
+                  setName={setNewClothesName}
+                />
 
                 <Colors
+                  loadingState={isPending}
                   color={newClothesColors}
                   setColors={setNewClothesColors}
                 />
 
                 <Photos
+                  loadingState={isPending}
                   setImage={setNewClothesImage}
                   setImagePreview={setNewClothesPreview}
                   image={newClothesImage}
@@ -192,22 +220,32 @@ export const ChooseClothesInOutfit = ({
                 />
 
                 <Seasons
+                  loadingState={isPending}
                   season={newClothesSeasons}
                   setSeason={setNewClothesSeason}
                 />
 
-                <Brand brand={newClothesBrand} setBrand={setNewClothesBrand} />
+                <Brand
+                  loadingState={isPending}
+                  brand={newClothesBrand}
+                  setBrand={setNewClothesBrand}
+                />
 
-                <Sizes size={newClothesSize} setSize={setNewClothesSize} />
+                <Sizes
+                  loadingState={isPending}
+                  size={newClothesSize}
+                  setSize={setNewClothesSize}
+                />
 
                 <Name
+                  loadingState={isPending}
                   title="Link to store"
                   name={newClothesLinkToStore}
                   setName={setNewClothesLinkToStore}
                   placeholder="Enter the link"
                 />
 
-                <View style={[wishlistStyles.btnContainer]}>
+                <View style={[wishlistStyles.btnContainer, { marginTop: 16 }]}>
                   <Pressable
                     onPress={handleClothesSubmit}
                     disabled={isAddingDisable}
@@ -251,7 +289,8 @@ export const ChooseClothesInOutfit = ({
                     )}
                   </Pressable>
                 </View>
-              </>
+                <ErrorMessages mt={16} messages={messages} />
+              </View>
             ) : (
               <ChooseClothes
                 isInWishlist

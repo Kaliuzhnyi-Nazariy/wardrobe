@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { authStyles } from "../auth/auth";
 import { colors, styles } from "../styles/global";
 
@@ -24,6 +25,12 @@ const changePassword = () => {
   const { mutate } = useMutation({
     mutationFn: () => updateUserPassword({ password, confirmPassword }),
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: "Password is changed!",
+        position: "top",
+        visibilityTime: 3000,
+      });
       router.replace("/(tabs)/account");
     },
     onError(err) {
@@ -33,7 +40,16 @@ const changePassword = () => {
 
   return (
     <View style={[styles.bg, styles.main]}>
-      <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
+      <View
+        style={{
+          width: "100%",
+          flexDirection: "column",
+          gap: 16,
+          // justifyContent: "center",
+          // alignItems: "center",
+        }}
+      >
+        <Text style={styles.headerForUpdPages}>Change password</Text>
         <View style={authStyles.field && authStyles.passwordField}>
           <Text style={styles.inputName}>Password</Text>
           {/* <Text style={authStyles.inputName}>Password</Text> */}

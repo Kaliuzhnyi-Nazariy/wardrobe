@@ -1,7 +1,9 @@
+import ErrorMessages from "@/components/ErrorMessages";
 import { ISignIn } from "@/features/auth/interface";
 import { signin } from "@/features/auth/request";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
@@ -14,6 +16,9 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
 
+  const queryClient = useQueryClient();
+  const { messages, setError, clearErrors } = useErrorHandler();
+
   const { mutate: signinFn, isPending } = useMutation({
     mutationFn: (data: ISignIn) => signin(data),
     onSuccess() {
@@ -24,19 +29,33 @@ export default function Signin() {
         visibilityTime: 3000,
       });
 
+      queryClient.invalidateQueries({ queryKey: ["userData"] });
+
       router.replace("/home");
     },
-    onError() {
-      console.log("err");
+    onError(err) {
+      // if (Array.isArray(err)) {
+      //   const messages = err.map(
+      //     (item: { field: string; message: string }) => ({
+      //       field: item.field,
+      //       message: item.message,
+      //     }),
+      //   );
+      //   setError(messages);
+      // } else {
+      //   setError([{ message: err.message }]);
+      // }
+      // errorHandler({ err, setError });
+      console.log({ err });
+      setError(err);
     },
+    gcTime: 0,
   });
 
   const handleSignin = () => {
     if (!email || !password) return;
-    // console.log({ email, password });
+    clearErrors();
     signinFn({ email, password });
-
-    // router.push("/home");
   };
 
   const handlePasswordShowing = () => {
@@ -45,7 +64,7 @@ export default function Signin() {
 
   const isValid = email.length > 0 && password.length >= 8;
 
-  console.log({ isValid });
+  // console.log({ isValid });
 
   return (
     <View style={[styles.main, authStyles.page]}>
@@ -64,6 +83,7 @@ export default function Signin() {
             autoComplete="email"
             textContentType="emailAddress"
             autoCapitalize="none"
+            accessible={!isPending}
           />
         </View>
         <View style={authStyles.field && authStyles.passwordField}>
@@ -82,6 +102,7 @@ export default function Signin() {
             autoCorrect={false}
             autoComplete="password"
             textContentType="password"
+            accessible={!isPending}
           />
           <Pressable
             onPress={handlePasswordShowing}
@@ -91,26 +112,56 @@ export default function Signin() {
           </Pressable>
         </View>
 
-        <Pressable
-          onPress={handleSignin}
-          style={({ pressed }) => [
-            authStyles.button,
-            pressed && authStyles.buttonPressed,
-            !isValid && authStyles.buttonDisabled,
-          ]}
-          disabled={!isValid}
-        >
-          {({ pressed }) => (
-            <Text
-              style={[
-                authStyles.buttonText,
-                pressed && authStyles.buttonTextPressed,
-              ]}
-            >
-              Sign in
+        {isPending ? (
+          <Text
+            style={{
+              marginHorizontal: "auto",
+            }}
+          >
+            Loading...
+          </Text>
+        ) : (
+          <Pressable
+            onPress={handleSignin}
+            style={({ pressed }) => [
+              authStyles.button,
+              pressed && authStyles.buttonPressed,
+              !isValid && authStyles.buttonDisabled,
+            ]}
+            disabled={!isValid || isPending}
+          >
+            {({ pressed }) => (
+              <Text
+                style={[
+                  authStyles.buttonText,
+                  pressed && authStyles.buttonTextPressed,
+                ]}
+              >
+                Sign in
+              </Text>
+            )}
+          </Pressable>
+        )}
+
+        {/* {error &&
+          error?.length > 0 &&
+          error.map((e) => (
+            <Text key={e.message} style={{ color: "red" }}>
+              {e.field && <Text key={e.field}>{e.field}: </Text>}
+              {e.message}
             </Text>
-          )}
-        </Pressable>
+          ))} */}
+
+        {/* {messages &&
+          messages?.length > 0 &&
+          messages.map((e) => (
+            <Text key={e.message} style={{ color: "red" }}>
+              {e.field && <Text key={e.field}>{e.field}: </Text>}
+              {e.message}
+            </Text>
+            ))} */}
+
+        <ErrorMessages messages={messages} />
 
         <Text style={authStyles.linkMessage}>
           You don't have an account?{" "}

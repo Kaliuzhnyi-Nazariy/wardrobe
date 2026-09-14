@@ -1,12 +1,15 @@
+import ErrorMessages from "@/components/ErrorMessages";
 import AddModalLayout from "@/components/modals/AddModalLayout";
 import ModalComponent from "@/components/modals/ModalComponent";
 import OperationButtons from "@/components/modals/OperationButtons";
 import { Size } from "@/features/clothes/interface";
 import { addClothes } from "@/features/clothes/request";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
 import { useLocalSearchParams } from "expo-router";
 import { useState } from "react";
+import Toast from "react-native-toast-message";
 import Brand from "./Brand";
 import Colors from "./Colors";
 import Name from "./Name";
@@ -48,40 +51,13 @@ const AddModal = ({
     size?: string;
   }>();
 
-  // const handleColorInput = (col: string) => {
-  //   if (col.trim().length === 0) {
-  //     setInputColor("");
-  //     return;
-  //   }
+  const { messages, setError, clearErrors } = useErrorHandler();
 
-  //   const isInList = color.includes(col.toLowerCase());
-
-  //   if (!isInList) {
-  //     setColor([...color, col.toLowerCase()]);
-  //     setInputColor("");
-  //   } else {
-  //     setInputColor("");
-  //   }
-  // };
-
-  // const handleDeleteColor = (col: string) => {
-  //   setColor(color.filter((c) => c !== col));
-  // };
-
-  // const handleSeason = (
-  //   pickSeason: "winter" | "spring" | "fall" | "summer",
-  // ) => {
-  //   if (season.includes(pickSeason)) {
-  //     setSeason(season.filter((s) => s !== pickSeason));
-  //   } else {
-  //     setSeason([...season, pickSeason]);
-  //   }
-  // };
-
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (data: FormData) => addClothes(data),
     onError(err) {
-      console.log(err);
+      // console.log(err);
+      setError(err);
     },
     onSuccess() {
       setName("");
@@ -94,6 +70,14 @@ const AddModal = ({
       setInputColor("");
       setModalVisible(false);
       setLinkToStore("");
+
+      Toast.show({
+        type: "success",
+        text1: "Clothes item is added!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       client.invalidateQueries({
         queryKey: ["getClothes", searchSeason, search, searchColor, searchSize],
       });
@@ -126,6 +110,8 @@ const AddModal = ({
     if (linkToStore.trim().length > 0)
       formData.append("storeLink", linkToStore);
 
+    clearErrors();
+
     mutate(formData);
   };
 
@@ -138,9 +124,9 @@ const AddModal = ({
       setModalVisible={setModalVisible}
     >
       <AddModalLayout title="Add clothes item">
-        <Name name={name} setName={setName} />
-
+        <Name name={name} setName={setName} loadingState={isPending} />
         <Colors
+          loadingState={isPending}
           setColors={setColor}
           // inputColor={inputColor}
           // setInputColor={setInputColor}
@@ -148,33 +134,37 @@ const AddModal = ({
           // handleDeleteColor={handleDeleteColor}
           color={color}
         />
-
         <Photos
+          loadingState={isPending}
           setImage={setImage}
           setImagePreview={setImagePreview}
           image={image}
           imagePreview={imagePreview}
         />
-
-        <Seasons season={season} setSeason={setSeason} />
-
-        <Brand brand={brand} setBrand={setBrand} />
-
-        <Sizes size={size} setSize={setSize} />
-
+        <Seasons
+          loadingState={isPending}
+          season={season}
+          setSeason={setSeason}
+        />
+        <Brand loadingState={isPending} brand={brand} setBrand={setBrand} />
+        <Sizes loadingState={isPending} size={size} setSize={setSize} />
         <Name
           title="Link to store"
           name={linkToStore}
           setName={setLinkToStore}
           placeholder="Enter the link"
+          loadingState={isPending}
         />
       </AddModalLayout>
 
       <OperationButtons
+        loadingState={isPending}
         availabilty={addAvailable}
         handleSubmit={handleSubmit}
         setModalVisible={setModalVisible}
       />
+
+      <ErrorMessages mt={16} messages={messages} />
     </ModalComponent>
   );
 };

@@ -1,16 +1,17 @@
+import ErrorMessages from "@/components/ErrorMessages";
 import { ISignUp } from "@/features/auth/interface";
 import { signup } from "@/features/auth/request";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { Link, router } from "expo-router";
 import { useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { colors, styles } from "../styles/global";
 import { authStyles } from "./auth";
 
-export default function Signin() {
+export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -33,6 +34,10 @@ export default function Signin() {
     confirmPassword.length > 0 &&
     name.length > 0;
 
+  const { messages, setError, clearErrors } = useErrorHandler();
+
+  // console.log(messages);
+
   const { mutate: signupFn, isPending } = useMutation({
     mutationFn: (data: ISignUp) => signup(data),
     onSuccess() {
@@ -46,6 +51,7 @@ export default function Signin() {
       router.push("/home");
     },
     onError(error) {
+      setError(error);
       // console.log("err", error);
       // console.log("err", error.message);
       // console.log("err", (error as AxiosError).event);
@@ -53,27 +59,29 @@ export default function Signin() {
   });
 
   const handleSignup = () => {
-    // console.log({ email, name, password, confirmPassword });
-
-    // console.log(!email || !password || !confirmPassword || !name);
     if (!email || !password || !confirmPassword || !name) return;
-    // console.log(password != confirmPassword);
-    if (password != confirmPassword) return;
 
-    // console.log({ email, name, password, confirmPassword });
+    // if (password != confirmPassword) return;
+    clearErrors();
     signupFn({ email, name, password, confirmPassword });
   };
 
   return (
-    <View style={[styles.main, authStyles.page]}>
+    // <ScrollView style={{}} contentContainerStyle={[styles.main, authStyles.page]}>
+    <ScrollView
+      // style={}
+      contentContainerStyle={[authStyles.page, styles.main]}
+    >
+      {/* <View style={[styles.main, authStyles.page]}> */}
       <Text style={styles.h1}>SIGN UP</Text>
       <View style={authStyles.form}>
         <View style={authStyles.field}>
-          <Text>Name</Text>
+          <Text style={styles.inputName}>Name</Text>
           <TextInput
             value={name}
             onChangeText={setName}
             style={styles.input}
+            accessible={!isPending}
             // style={authStyles.input}
           />
         </View>
@@ -90,6 +98,7 @@ export default function Signin() {
             autoComplete="email"
             textContentType="emailAddress"
             autoCapitalize="none"
+            accessible={!isPending}
           />
         </View>
         <View style={authStyles.field && authStyles.passwordField}>
@@ -108,6 +117,7 @@ export default function Signin() {
             autoCorrect={false}
             autoComplete="password"
             textContentType="password"
+            accessible={!isPending}
           />
           <Pressable
             onPress={handlePasswordShowing}
@@ -132,6 +142,7 @@ export default function Signin() {
             autoCorrect={false}
             autoComplete="password"
             textContentType="password"
+            accessible={!isPending}
           />
           <Pressable
             onPress={handleConfirmPasswordShowing}
@@ -141,13 +152,28 @@ export default function Signin() {
           </Pressable>
         </View>
       </View>
+
+      {/* {messages && messages?.length > 0 && (
+        <View style={{ flexDirection: "column", gap: 12 }}>
+          {messages.map((e, index) => (
+            <Text key={index} style={{ color: "red", fontSize: 12 }}>
+              {e.field && <Text key={e.field}>{e.field}: </Text>}
+              {e.message}
+            </Text>
+          ))}
+        </View>
+      )} */}
+
+      <ErrorMessages messages={messages} />
+
       <Pressable
         onPress={handleSignup}
-        disabled={!isValid}
+        disabled={!isValid || isPending}
         style={({ pressed }) => [
           authStyles.button,
           pressed && authStyles.buttonPressed,
           !isValid && authStyles.buttonDisabled,
+          isPending && authStyles.buttonDisabled,
         ]}
       >
         {({ pressed }) => (
@@ -168,6 +194,6 @@ export default function Signin() {
           Sign in!
         </Link>
       </Text>
-    </View>
+    </ScrollView>
   );
 }

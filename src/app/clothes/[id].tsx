@@ -6,10 +6,12 @@ import {
   getClothesById,
   updateClothes,
 } from "@/features/clothes/request";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 export default function ClothingItemScreen() {
   const { id } = useLocalSearchParams();
@@ -20,6 +22,17 @@ export default function ClothingItemScreen() {
     queryKey: ["getClothesData", id],
     queryFn: () => getClothesById(param),
   });
+
+  const [mode, setMode] = useState<"review" | "edit">("review");
+  const { messages, setError: setApiError, clearErrors } = useErrorHandler();
+
+  const handleModeChange = () => {
+    if (mode === "edit") {
+      setMode("review");
+    } else {
+      setMode("edit");
+    }
+  };
 
   const {
     season: searchSeason,
@@ -46,16 +59,31 @@ export default function ClothingItemScreen() {
       client.invalidateQueries({
         queryKey: ["getClothes", searchSeason, search, searchColor, searchSize],
       });
+      handleModeChange();
+      Toast.show({
+        type: "success",
+        text1: "Clothes item updated!",
+        position: "top",
+        visibilityTime: 3000,
+      });
     },
     onError(err) {
       console.log(err);
-      return;
+      setApiError(err);
+      // return;
     },
   });
 
   const { mutate: deleteClothesById } = useMutation({
     mutationFn: () => deleteClothes({ id: data._id }),
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: "Clothes item removed!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       router.replace("/(tabs)/clothes");
     },
     onError(err) {
@@ -76,9 +104,14 @@ export default function ClothingItemScreen() {
     <View style={[styles.container, styles.bg]}>
       <Header title={data.name} link="/(tabs)/clothes" />
       <Form
+        loadingState={isPending}
         deleteClothesById={deleteClothesById}
         updateClothesItem={updateClothesItem}
         data={data}
+        mode={mode}
+        handleModeChange={handleModeChange}
+        messages={messages}
+        clearErrrors={clearErrors}
       />
     </View>
   );

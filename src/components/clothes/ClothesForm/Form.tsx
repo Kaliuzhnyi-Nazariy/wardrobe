@@ -2,7 +2,9 @@ import { clothesItemStyles } from "@/app/clothes/clothesItem";
 import { styles } from "@/app/styles/global";
 import { addToWardrobeButton } from "@/components/buttons/styles";
 import UpdateFormButtons from "@/components/buttons/UpdateFormButtons";
+import ErrorMessages from "@/components/ErrorMessages";
 import { Season, Size } from "@/features/clothes/interface";
+import { IValidationError } from "@/helpers/interface";
 import { ImagePickerAsset } from "expo-image-picker";
 import { useEffect, useState } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
@@ -21,6 +23,8 @@ export interface IClothesItem {
   size: Size;
   brand: string;
   storeLink?: string;
+
+  isOwned: boolean;
 }
 
 const Form = ({
@@ -29,12 +33,24 @@ const Form = ({
   deleteClothesById,
   updateStatus = false,
   updateStatusFn,
+  loadingState,
+
+  mode,
+  handleModeChange,
+  messages,
+  clearErrrors,
 }: {
   data: IClothesItem;
   updateClothesItem: (val: FormData) => void;
   deleteClothesById: () => void;
   updateStatus?: boolean;
   updateStatusFn?: () => void;
+  loadingState: boolean;
+
+  mode?: "review" | "edit";
+  handleModeChange?: () => void;
+  messages: IValidationError[];
+  clearErrrors: () => void;
 }) => {
   const [name, setName] = useState("");
   const [brand, setBrand] = useState("");
@@ -45,6 +61,10 @@ const Form = ({
   const [storeLink, setStoreLink] = useState("");
 
   const [newImage, setNewImage] = useState<ImagePickerAsset | null>(null);
+
+  useEffect(() => {
+    clearErrrors();
+  }, []);
 
   useEffect(() => {
     if (data) {
@@ -58,15 +78,15 @@ const Form = ({
     }
   }, [data]);
 
-  const [mode, setMode] = useState<"review" | "edit">("review");
+  // const [mode, setMode] = useState<"review" | "edit">("review");
 
-  const handleModeChange = () => {
-    if (mode === "edit") {
-      setMode("review");
-    } else {
-      setMode("edit");
-    }
-  };
+  // const handleModeChange = () => {
+  //   if (mode === "edit") {
+  //     setMode("review");
+  //   } else {
+  //     setMode("edit");
+  //   }
+  // };
 
   // const [inputColor, setInputColor] = useState("");
 
@@ -117,11 +137,13 @@ const Form = ({
   const handleUpdate = async () => {
     const form = new FormData();
 
+    clearErrrors();
+
     if (
       !name ||
       !brand ||
       colors.length == 0 ||
-      !image ||
+      // !image ||
       season.length == 0 ||
       !size
     )
@@ -144,8 +166,9 @@ const Form = ({
     form.append("size", size);
 
     form.append("storeLink", storeLink);
+    form.append("isOwned", JSON.stringify(data.isOwned));
 
-    handleModeChange();
+    // handleModeChange();
 
     updateClothesItem(form);
   };
@@ -179,6 +202,7 @@ const Form = ({
                 image={newImage}
                 setImagePreview={setImage}
                 imagePreview={image}
+                loadingState={loadingState}
               />
             ) : (
               <Image src={image} style={{ width: "100%", height: 400 }} />
@@ -192,6 +216,7 @@ const Form = ({
                 image={newImage}
                 setImagePreview={setImage}
                 imagePreview={image}
+                loadingState={loadingState}
               />
             ) : (
               // <Image src={image} style={{ width: "100%", height: 400 }} />
@@ -200,8 +225,8 @@ const Form = ({
           </>
         )}
 
-        <InfoItem data={name} label="Name" mode={mode} setData={setName} />
-        <InfoItem data={brand} label="Brand" mode={mode} setData={setBrand} />
+        <InfoItem data={name} label="Name" mode={mode!} setData={setName} />
+        <InfoItem data={brand} label="Brand" mode={mode!} setData={setBrand} />
 
         {mode === "review" ? (
           <View
@@ -230,6 +255,7 @@ const Form = ({
             // inputColor={inputColor}
             // setInputColor={setInputColor}
             key="color_input"
+            loadingState={loadingState}
           />
         )}
 
@@ -245,7 +271,11 @@ const Form = ({
             </View>
           </View>
         ) : (
-          <Seasons season={season} setSeason={setSeason} />
+          <Seasons
+            loadingState={loadingState}
+            season={season}
+            setSeason={setSeason}
+          />
           // <Seasons season={season} handleSeason={handleSeason} />
         )}
 
@@ -253,18 +283,18 @@ const Form = ({
           data={storeLink}
           label="Store link"
           isLink
-          mode={mode}
+          mode={mode!}
           setData={setStoreLink}
         />
 
         <UpdateFormButtons
           deleteItem={deleteClothesById}
-          handleModeChange={handleModeChange}
+          handleModeChange={() => handleModeChange && handleModeChange()}
           handleUpdate={handleUpdate}
-          mode={mode}
+          mode={mode!}
         />
 
-        {updateStatus && mode === "review" && (
+        {updateStatus && !data.isOwned && mode === "review" && (
           <Pressable
             style={[styles.button, addToWardrobeButton.addToWardrobe]}
             onPress={() => {
@@ -279,6 +309,8 @@ const Form = ({
           </Pressable>
         )}
       </View>
+
+      <ErrorMessages mt={16} messages={messages} />
     </ScrollView>
   );
 };

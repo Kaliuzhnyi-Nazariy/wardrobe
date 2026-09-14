@@ -5,16 +5,20 @@ import {
   getOutfitById,
   updateOutfit,
 } from "@/features/outfit/requests";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
-import React from "react";
+import React, { useState } from "react";
 import { Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { styles } from "../styles/global";
 
 const OutfitById = () => {
   const { id } = useLocalSearchParams();
 
   const param = typeof id === "string" ? id : id[0];
+
+  const { clearErrors, messages, setError } = useErrorHandler();
 
   const { data: outfit, isFetching } = useQuery({
     queryKey: ["getOutfitById", param],
@@ -23,12 +27,16 @@ const OutfitById = () => {
 
   const client = useQueryClient();
 
-  const { mutate: updateOutfitFn } = useMutation({
+  const { mutate: updateOutfitFn, isPending } = useMutation({
     mutationFn: (newData: FormData) =>
       updateOutfit({ data: newData, id: param }),
 
     onSuccess() {
       client.invalidateQueries({ queryKey: ["getOutfitById", param] });
+      updateMode();
+    },
+    onError(err) {
+      setError(err);
     },
   });
 
@@ -45,12 +53,29 @@ const OutfitById = () => {
   const { mutate: deleteOutfit } = useMutation({
     mutationFn: () => deleteOutfirById(param),
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: "Outfit removed!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       router.replace("/(tabs)/fits");
       client.invalidateQueries({
         queryKey: ["getOutfits", searchSeason, searchName, searchClothes],
       });
     },
   });
+
+  const [mode, setMode] = useState<"review" | "edit">("review");
+
+  const updateMode = () => {
+    if (mode === "review") {
+      setMode("edit");
+    } else {
+      setMode("review");
+    }
+  };
 
   if (isFetching) {
     return (
@@ -67,9 +92,14 @@ const OutfitById = () => {
         <Text>{id}</Text>
       </View> */}
       <Form
+        loadingState={isPending}
         deleteOutfit={deleteOutfit}
         updateOutfitFn={updateOutfitFn}
         data={outfit}
+        mode={mode}
+        clearErrors={clearErrors}
+        messages={messages}
+        handleModeChange={updateMode}
       />
     </View>
   );

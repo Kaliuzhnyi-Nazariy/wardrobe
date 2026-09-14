@@ -1,9 +1,12 @@
 import { updateBtn } from "@/components/buttons/styles";
+import ErrorMessages from "@/components/ErrorMessages";
 import { updateUserData } from "@/features/user/requests";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { styles } from "../styles/global";
 
 interface UserDataCache {
@@ -25,11 +28,23 @@ const updateUserdata = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
+  const { messages, setError, clearErrors } = useErrorHandler();
+
   const { mutate } = useMutation({
     mutationFn: () => updateUserData({ name, email }),
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: "Data is updated!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       queryClient.invalidateQueries({ queryKey: ["userData"] });
       router.replace("/(tabs)/account");
+    },
+    onError(err) {
+      setError(err);
     },
   });
 
@@ -43,10 +58,17 @@ const updateUserdata = () => {
   const validation = name.length > 0 && email.length > 0;
 
   return (
-    <View style={[styles.bg, styles.main]}>
-      <Text>Update user data</Text>
-      <View style={{ width: "100%" }}>
-        <Text>Name: </Text>
+    <View style={[styles.bg, styles.main, { gap: 16 }]}>
+      <Text style={styles.headerForUpdPages}>Update user data</Text>
+      <View
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+        }}
+      >
+        <Text style={styles.inputName}>Name: </Text>
         <TextInput
           value={name}
           onChangeText={setName}
@@ -54,8 +76,15 @@ const updateUserdata = () => {
           style={styles.input}
         />
       </View>
-      <View style={{ width: "100%" }}>
-        <Text>Email: </Text>
+      <View
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: 8,
+        }}
+      >
+        <Text style={styles.inputName}>Email: </Text>
         <TextInput
           value={email}
           onChangeText={setEmail}
@@ -74,10 +103,15 @@ const updateUserdata = () => {
           updateBtn.updBtn,
           !validation && { opacity: 0.5 },
         ]}
-        onPress={() => mutate()}
+        onPress={() => {
+          clearErrors();
+          mutate();
+        }}
       >
         <Text style={{ color: "white", fontWeight: 700 }}>Update</Text>
       </Pressable>
+
+      <ErrorMessages mt={16} messages={messages} />
     </View>
   );
 };

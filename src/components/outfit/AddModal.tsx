@@ -1,11 +1,14 @@
 import { Season } from "@/features/clothes/interface";
 import { createOutfit } from "@/features/outfit/requests";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
 import { useState } from "react";
+import Toast from "react-native-toast-message";
 import Name from "../clothes/AddModal/Name";
 import Photos from "../clothes/AddModal/Photos";
 import Seasons from "../clothes/AddModal/Seasons";
+import ErrorMessages from "../ErrorMessages";
 import AddModalLayout from "../modals/AddModalLayout";
 import ModalComponent from "../modals/ModalComponent";
 import OperationButtons from "../modals/OperationButtons";
@@ -28,17 +31,27 @@ const AddModal = ({
 
   const client = useQueryClient();
 
+  const { messages, setError, clearErrors } = useErrorHandler();
+
   const { mutate, isPending } = useMutation({
     mutationFn: (data: FormData) => createOutfit(data),
 
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: "Outfit is added!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       client.invalidateQueries({
         queryKey: ["getOutfits"],
       });
       setModalVisible(false);
     },
     onError(err) {
-      console.log(err);
+      // console.log(err);
+      setError(err);
     },
   });
 
@@ -46,7 +59,7 @@ const AddModal = ({
     name.length > 0 && seasons.length > 0 && clothes.length > 0;
 
   const handleAddOutfit = () => {
-    if (seasons.length === 0 || clothes.length === 0) return;
+    // if (seasons.length === 0 || clothes.length === 0) return;
 
     const formData = new FormData();
 
@@ -68,6 +81,8 @@ const AddModal = ({
 
     formData.append("isOwned", "true");
 
+    clearErrors();
+
     mutate(formData);
   };
 
@@ -77,9 +92,14 @@ const AddModal = ({
       setModalVisible={setModalVisible}
     >
       <AddModalLayout title="Add outfit">
-        <Name name={name} setName={setName} />
-        <Seasons season={seasons} setSeason={setSeasons} />
+        <Name loadingState={isPending} name={name} setName={setName} />
+        <Seasons
+          loadingState={isPending}
+          season={seasons}
+          setSeason={setSeasons}
+        />
         <Photos
+          loadingState={isPending}
           setImage={setPhoto}
           setImagePreview={setPreviewPhoto}
           image={photo}
@@ -91,10 +111,13 @@ const AddModal = ({
         />
       </AddModalLayout>
       <OperationButtons
+        loadingState={isPending}
         availabilty={availabilty}
         handleSubmit={handleAddOutfit}
         setModalVisible={setModalVisible}
       />
+
+      <ErrorMessages messages={messages} mt={16} />
     </ModalComponent>
   );
 };

@@ -2,10 +2,12 @@ import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { addClothes } from "@/features/clothes/request";
 import { createOutfit } from "@/features/outfit/requests";
+import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 import Brand from "../clothes/AddModal/Brand";
 import Colors from "../clothes/AddModal/Colors";
 import Name from "../clothes/AddModal/Name";
@@ -13,6 +15,7 @@ import OperationModalButtons from "../clothes/AddModal/OperationModalButtons";
 import Photos from "../clothes/AddModal/Photos";
 import Seasons from "../clothes/AddModal/Seasons";
 import Sizes from "../clothes/AddModal/Sizes";
+import ErrorMessages from "../ErrorMessages";
 import AddModalLayout from "../modals/AddModalLayout";
 import ModalComponent from "../modals/ModalComponent";
 import { ClothesItem } from "../outfit/interface";
@@ -69,14 +72,31 @@ const AddModal = ({
 
   const client = useQueryClient();
 
+  const {
+    messages: clothesMessages,
+    setError: setClothesError,
+    clearErrors: clearClothesError,
+  } = useErrorHandler();
+
   // submits
-  const { mutate: addWishClothes, isPending } = useMutation({
+  const { mutate: addWishClothes, isPending: addingClothes } = useMutation({
     mutationFn: (clothesData: FormData) => addClothes(clothesData),
     onSuccess() {
       resetFields();
       setModalVisible(false);
       setMode(undefined);
+
+      Toast.show({
+        type: "success",
+        text1: "Clothes item is added!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       client.invalidateQueries({ queryKey: ["getWishlist"] });
+    },
+    onError(err) {
+      setClothesError(err);
     },
   });
 
@@ -84,7 +104,7 @@ const AddModal = ({
     const formData = new FormData();
 
     if (
-      !clothesBrand ||
+      // !clothesBrand ||
       !clothesName ||
       !clothesSize ||
       clothesSeason.length === 0 ||
@@ -112,8 +132,16 @@ const AddModal = ({
     if (linkToStore.trim().length > 0)
       formData.append("storeLink", linkToStore);
 
+    clearClothesError();
+
     addWishClothes(formData);
   };
+
+  const {
+    messages: outfitErrors,
+    setError: setOutfitError,
+    clearErrors: clearOutfitError,
+  } = useErrorHandler();
 
   const { mutate: addWishOutfit, isPending: outfitPending } = useMutation({
     mutationFn: (clothesData: FormData) => createOutfit(clothesData),
@@ -121,7 +149,18 @@ const AddModal = ({
       resetFields();
       setModalVisible(false);
       setMode(undefined);
+
+      Toast.show({
+        type: "success",
+        text1: "Outfit is added!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       client.invalidateQueries({ queryKey: ["getWishlist"] });
+    },
+    onError(err) {
+      setOutfitError(err);
     },
   });
 
@@ -145,6 +184,8 @@ const AddModal = ({
     }
 
     formData.append("isOwned", "false");
+
+    clearOutfitError();
 
     addWishOutfit(formData);
   };
@@ -233,11 +274,20 @@ const AddModal = ({
             <>
               {mode === "clothes" ? (
                 <>
-                  <Name name={clothesName} setName={setClothesName} />
+                  <Name
+                    loadingState={addingClothes}
+                    name={clothesName}
+                    setName={setClothesName}
+                  />
 
-                  <Colors color={clothesColor} setColors={setClothesColor} />
+                  <Colors
+                    loadingState={addingClothes}
+                    color={clothesColor}
+                    setColors={setClothesColor}
+                  />
 
                   <Photos
+                    loadingState={addingClothes}
                     setImage={setClothesImage}
                     setImagePreview={setClothesImagePreview}
                     image={clothesImage}
@@ -245,15 +295,25 @@ const AddModal = ({
                   />
 
                   <Seasons
+                    loadingState={addingClothes}
                     season={clothesSeason}
                     setSeason={setClothesSeason}
                   />
 
-                  <Brand brand={clothesBrand} setBrand={setClothesBrand} />
+                  <Brand
+                    loadingState={addingClothes}
+                    brand={clothesBrand}
+                    setBrand={setClothesBrand}
+                  />
 
-                  <Sizes size={clothesSize} setSize={setClothesSize} />
+                  <Sizes
+                    loadingState={addingClothes}
+                    size={clothesSize}
+                    setSize={setClothesSize}
+                  />
 
                   <Name
+                    loadingState={addingClothes}
                     title="Link to store"
                     name={linkToStore}
                     setName={setLinkToStore}
@@ -261,17 +321,25 @@ const AddModal = ({
                   />
 
                   <OperationModalButtons
+                    loadingState={addingClothes}
                     isResetAvailable={resetClothesIsAvailable}
                     handleSubmit={handleClothesSubmit}
                     resetFn={resetFields}
                     availabilty={clothesAvailability}
                   />
+
+                  <ErrorMessages mt={16} messages={clothesMessages} />
                 </>
               ) : (
                 <>
-                  <Name name={outfitName} setName={setOutfitName} />
+                  <Name
+                    loadingState={outfitPending}
+                    name={outfitName}
+                    setName={setOutfitName}
+                  />
 
                   <Photos
+                    loadingState={outfitPending}
                     setImage={setOutfitImage}
                     setImagePreview={setOutfitImagePreview}
                     image={outfitImage}
@@ -279,18 +347,26 @@ const AddModal = ({
                   />
 
                   <ChooseClothesInOutfit
+                    handleClothesIsAble={outfitPending}
                     chosenClothes={outfitClothes}
                     setClothes={setOutfitClohtes}
                   />
 
-                  <Seasons season={outfitSeason} setSeason={setOutfitSeason} />
+                  <Seasons
+                    loadingState={outfitPending}
+                    season={outfitSeason}
+                    setSeason={setOutfitSeason}
+                  />
 
                   <OperationModalButtons
+                    loadingState={outfitPending}
                     isResetAvailable={resetOutfitIsAvailable}
                     handleSubmit={handleOutfitSubmit}
                     resetFn={resetFields}
                     availabilty={outfitAvailability}
                   />
+
+                  <ErrorMessages mt={16} messages={outfitErrors} />
                 </>
               )}
             </>
