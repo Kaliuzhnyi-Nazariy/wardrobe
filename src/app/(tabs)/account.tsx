@@ -1,11 +1,13 @@
 import AccButton from "@/components/Account/AccButton";
+import { accountStyles } from "@/components/Account/styles";
 import { logout } from "@/features/auth/request";
 import { deleteAllClothes } from "@/features/clothes/request";
 import { deleteAllOutfits } from "@/features/outfit/requests";
 import { deleteUserAccount } from "@/features/user/requests";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
-import { ScrollView, Text, View } from "react-native";
+import { Linking, ScrollView, Text, View } from "react-native";
+import Toast from "react-native-toast-message";
 import { styles } from "../styles/global";
 
 export default function Account() {
@@ -14,6 +16,13 @@ export default function Account() {
   const { mutate: deleteClothes } = useMutation({
     mutationFn: deleteAllClothes,
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: "Clothes are removed!",
+        position: "top",
+        visibilityTime: 3000,
+      });
+
       client.invalidateQueries({
         predicate: (query) => {
           const queryName = query.queryKey[0] as string;
@@ -26,6 +35,12 @@ export default function Account() {
   const { mutate: deleteOutfitss } = useMutation({
     mutationFn: deleteAllOutfits,
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: "Outfis are removed!",
+        position: "top",
+        visibilityTime: 3000,
+      });
       client.invalidateQueries({
         predicate: (query) => {
           const queryName = query.queryKey[0] as string;
@@ -56,36 +71,27 @@ export default function Account() {
     router.navigate(link as any);
   };
 
+  const formLink = () => {
+    Linking.openURL(
+      "https://docs.google.com/forms/d/e/1FAIpQLSfTTRREY_zy5nGtABHUi0sJ_TG7ScHZT3mJqww7627OqDw9ZA/viewform?usp=header",
+    );
+  };
+
   return (
     <View style={[styles.bg, styles.container, { marginVertical: 60 }]}>
-      <Text>Account</Text>
+      <View style={accountStyles.accHeader}>
+        <Text style={accountStyles.accHeaderText}>Account</Text>
+      </View>
       <ScrollView
         style={{ flex: 1, width: "100%" }}
-        contentContainerStyle={[
-          // {
-          //   outlineWidth: 1,
-          //   outlineColor: "tomato",
-          // },
-          {
-            marginTop: 20,
-            flexDirection: "column",
-            gap: 16,
-          },
-          {
-            flex: 1,
-            width: "80%",
-            alignItems: "center",
-            marginHorizontal: "auto",
-            justifyContent: "space-between",
-          },
-        ]}
+        contentContainerStyle={accountStyles.accView}
       >
         <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
-          <Text>Wardrobe</Text>
+          <Text style={styles.inputName}>Wardrobe</Text>
           <AccButton text="Remove clothes" fn={deleteClothes} />
           <AccButton text="Remove outfits" fn={deleteOutfitss} />
 
-          <Text>User</Text>
+          <Text style={styles.inputName}>User</Text>
           <AccButton
             text="Change password"
             fn={() => redirect("/changePassword/changePassword")}
@@ -94,7 +100,12 @@ export default function Account() {
             text="Update data"
             fn={() => redirect("/updateUser/updateUserdata")}
           />
+          <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
+            <Text style={styles.inputName}>Form</Text>
+            <AccButton text="Leave you opinion" fn={formLink} />
+          </View>
         </View>
+
         <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
           <AccButton text="Logout" fn={logoutFn} />
           <AccButton text="Delete account" fn={deleteAccount} />
