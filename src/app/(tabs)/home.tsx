@@ -1,7 +1,9 @@
 import { getData } from "@/features/user/requests";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
-import { Pressable, Text, View } from "react-native";
+import { router } from "expo-router";
+import { useEffect } from "react";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import HomeView from "../../components/home/HomeView";
 import { styles } from "../styles/global";
 
@@ -9,12 +11,38 @@ export default function HomeScreen() {
   const { data, isFetched, isFetching, refetch } = useQuery({
     queryKey: ["userData"],
     queryFn: getData,
+    gcTime: 0,
+    staleTime: 0,
   });
+
+  useEffect(() => {
+    if (isFetched && !data) {
+      router.replace("/auth/signin");
+    }
+  }, [data, isFetched]);
+
+  // if (isFetching) {
+  //   return (
+  //     <View style={[styles.container, styles.bg]}>
+  //       <Text>Loading...</Text>
+  //     </View>
+  //   );
+  // }
 
   if (isFetching) {
     return (
-      <View style={[styles.container, styles.bg]}>
-        <Text>Loading...</Text>
+      <View
+        style={[
+          styles.container,
+          styles.bg,
+          { justifyContent: "center", alignItems: "center" },
+        ]}
+      >
+        {/* A native, animated spinning wheel */}
+        <ActivityIndicator size="large" color="#0000ff" />
+        <Text style={{ marginTop: 12, fontSize: 16, color: "#555" }}>
+          Loading your dashboard...
+        </Text>
       </View>
     );
   }
@@ -54,12 +82,3 @@ export default function HomeScreen() {
     </View>
   );
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//   },
-//   text: { fontSize: 20 },
-// });
