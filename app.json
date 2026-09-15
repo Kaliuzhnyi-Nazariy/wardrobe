@@ -22,8 +22,7 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.nazariikl.dashboard",
-      "googleServicesFile": "./google-services.json"
+      "package": "com.nazariikl.dashboard"
     },
     "web": {
       "output": "static",
