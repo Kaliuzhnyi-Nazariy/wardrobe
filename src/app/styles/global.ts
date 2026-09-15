@@ -69,7 +69,7 @@ export const styles = StyleSheet.create({
   },
 
   h2: {
-    fontSize: 28,
+    fontSize: 20,
     fontWeight: 500,
     color: colors.primary,
     marginHorizontal: "auto",
