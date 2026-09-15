@@ -67,4 +67,30 @@ export const styles = StyleSheet.create({
     color: colors.primary,
     marginHorizontal: "auto",
   },
+
+  h2: {
+    fontSize: 28,
+    fontWeight: 500,
+    color: colors.primary,
+    marginHorizontal: "auto",
+  },
+  homeButton: {
+    borderWidth: 1,
+    borderColor: colors.secondary,
+    color: colors.secondary,
+    marginTop: 36,
+  },
+});
+
+export const splashStyles = StyleSheet.create({
+  splashContainer: {
+    flex: 1,
+    backgroundColor: colors.background,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  splashImage: {
+    width: 200,
+    height: 200,
+  },
 });
