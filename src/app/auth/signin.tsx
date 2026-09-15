@@ -29,8 +29,6 @@ export default function Signin() {
         visibilityTime: 3000,
       });
 
-      queryClient.invalidateQueries({ queryKey: ["userData"] });
-
       setTimeout(() => {
         router.replace("/home");
       }, 0);

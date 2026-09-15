@@ -53,11 +53,15 @@ export default function Account() {
   const { mutate: logoutFn } = useMutation({
     mutationFn: logout,
     onSuccess() {
+      client.setQueryData(["userData"], null);
       setTimeout(() => {
         router.replace("/");
       }, 0);
-      client.invalidateQueries({
-        queryKey: ["userData"],
+    },
+    onError(err) {
+      Toast.show({
+        type: "error",
+        text1: err.message,
       });
     },
   });
@@ -65,9 +69,16 @@ export default function Account() {
   const { mutate: deleteAccount } = useMutation({
     mutationFn: deleteUserAccount,
     onSuccess() {
+      client.setQueryData(["userData"], null);
       setTimeout(() => {
         router.replace("/");
       }, 0);
+    },
+    onError(err) {
+      Toast.show({
+        type: "error",
+        text1: err.message,
+      });
     },
   });
 
