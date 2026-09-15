@@ -8,7 +8,11 @@
     "scheme": "wardrobe",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/wardrobe_logo.icon"
+      "icon": "./assets/wardrobe_logo.icon",
+      "bundleIdentifier": "com.nazariikl.dashboard",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -18,7 +22,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "package": "com.nazariikl.dashboard"
+      "package": "com.nazariikl.dashboard",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "output": "static",
