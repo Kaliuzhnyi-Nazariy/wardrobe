@@ -53,7 +53,9 @@ export default function Account() {
   const { mutate: logoutFn } = useMutation({
     mutationFn: logout,
     onSuccess() {
-      router.replace("/");
+      setTimeout(() => {
+        router.replace("/");
+      }, 0);
       client.invalidateQueries({
         queryKey: ["userData"],
       });
@@ -63,12 +65,16 @@ export default function Account() {
   const { mutate: deleteAccount } = useMutation({
     mutationFn: deleteUserAccount,
     onSuccess() {
-      router.replace("/");
+      setTimeout(() => {
+        router.replace("/");
+      }, 0);
     },
   });
 
   const redirect = (link: string) => {
-    router.navigate(link as any);
+    setTimeout(() => {
+      router.navigate(link as any);
+    }, 0);
   };
 
   const formLink = () => {

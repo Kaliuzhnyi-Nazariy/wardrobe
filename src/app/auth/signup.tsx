@@ -48,7 +48,9 @@ export default function Signup() {
         visibilityTime: 3000,
       });
 
-      router.push("/(tabs)/home");
+      setTimeout(() => {
+        router.replace("/home");
+      }, 0);
     },
     onError(error) {
       setError(error);

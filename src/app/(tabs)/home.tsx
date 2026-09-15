@@ -17,7 +17,9 @@ export default function HomeScreen() {
 
   useEffect(() => {
     if (isFetched && !data) {
-      router.replace("/auth/signin");
+      setTimeout(() => {
+        router.replace("/auth/signin");
+      }, 0);
     }
   }, [data, isFetched]);
 
