@@ -31,7 +31,7 @@ export default function Signin() {
 
       queryClient.invalidateQueries({ queryKey: ["userData"] });
 
-      router.replace("/home");
+      router.replace("/(tabs)/home");
     },
     onError(err) {
       // if (Array.isArray(err)) {

@@ -5,9 +5,11 @@ import { styles } from "./styles/global";
 export default function Index() {
   return (
     <View style={styles.main}>
-      <Text>Welcome to WARDROBE!</Text>
-      <Link href={"/home"}>Go Home</Link>
-      <Link href={"/auth/signin"}>Go Signin</Link>
+      <Text style={styles.h2}>Welcome to WARDROBE!</Text>
+      <Link href={"/(tabs)/home"} style={[styles.button, styles.homeButton]}>
+        Go Home
+      </Link>
+      {/* <Link href={"/auth/signin"}>Go Signin</Link> */}
     </View>
   );
 }
