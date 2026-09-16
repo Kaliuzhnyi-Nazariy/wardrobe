@@ -6,6 +6,7 @@ import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import ClothesItem from "./ClothesItem";
 import { clothesStyles } from "./style";
+import Loading from "../Loading/Loading";
 
 export interface IClothesItem {
   _id: string;
@@ -26,9 +27,10 @@ function ClothesView({
 }) {
   if (isFetching) {
     return (
-      <View style={[styles.container, styles.bg]}>
-        <Text>Loading...</Text>
-      </View>
+      // <View style={[styles.container, styles.bg]}>
+      //   <Text>Loading...</Text>
+      // </View>
+      <Loading />
     );
   }
 

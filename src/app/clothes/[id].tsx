@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/global";
 import Form from "@/components/clothes/ClothesForm/Form";
 import Header from "@/components/header/Header";
+import Loading from "@/components/Loading/Loading";
 import {
   deleteClothes,
   getClothesById,
@@ -94,9 +95,10 @@ export default function ClothingItemScreen() {
 
   if (isFetching) {
     return (
-      <View style={[styles.container, styles.bg]}>
-        <Text>Loading...</Text>
-      </View>
+      // <View style={[styles.container, styles.bg]}>
+      //   <Text>Loading...</Text>
+      // </View>
+      <Loading />
     );
   }
 

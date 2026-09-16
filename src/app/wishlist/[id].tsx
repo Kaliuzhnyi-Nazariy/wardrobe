@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import { Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { styles } from "../styles/global";
+import Loading from "@/components/Loading/Loading";
 
 const WishlistItemData = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -193,9 +194,10 @@ const WishlistItemData = () => {
 
   if (isLoading) {
     return (
-      <View style={styles.container}>
-        <Text>Loading...</Text>
-      </View>
+      // <View style={styles.container}>
+      //   <Text>Loading...</Text>
+      // </View>
+      <Loading />
     );
   }
 

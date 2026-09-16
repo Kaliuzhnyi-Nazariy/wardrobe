@@ -2,9 +2,9 @@ import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { Link } from "expo-router";
 import { Fragment } from "react";
-import { ActivityIndicator, ScrollView, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { ScrollView, Text, View } from "react-native";
 import ClothesItem from "../clothes/ClothesItem";
+import Loading from "../Loading/Loading";
 import type { ClothesItem as CI } from "../outfit/interface";
 import OutfitItem from "../outfit/OutfitItem";
 
@@ -41,9 +41,10 @@ const WishlistView = ({
 
   if (isFetching) {
     return (
-      <SafeAreaView style={[styles.container, styles.contentContainer]}>
-        <ActivityIndicator size="large" color="#000" />
-      </SafeAreaView>
+      // <SafeAreaView style={[styles.container, styles.contentContainer]}>
+      //   <ActivityIndicator size="large" color="#000" />
+      // </SafeAreaView>
+      <Loading />
     );
   }
 

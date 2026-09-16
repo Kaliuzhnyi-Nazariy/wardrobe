@@ -7,6 +7,7 @@ import { clothesStyles } from "../clothes/style";
 import { ClothesItem } from "./interface";
 import OutfitItem from "./OutfitItem";
 import { outfitViewStyles } from "./style";
+import Loading from "../Loading/Loading";
 
 export interface IOutfit {
   _id: string;
@@ -26,9 +27,10 @@ const OutfitView = ({
 }) => {
   if (loading) {
     return (
-      <View style={outfitViewStyles.container}>
-        <Text>Loading</Text>
-      </View>
+      // <View style={outfitViewStyles.container}>
+      //   <Text>Loading</Text>
+      // </View>
+      <Loading />
     );
   }
 

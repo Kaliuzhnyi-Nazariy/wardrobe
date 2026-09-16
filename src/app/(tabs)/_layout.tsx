@@ -64,12 +64,13 @@
 //   );
 // }
 
+import Loading from "@/components/Loading/Loading";
 import { getData } from "@/features/user/requests";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs } from "expo-router";
-import { ActivityIndicator, Text, View } from "react-native";
-import { colors, styles } from "../styles/global"; // upewnij się, że ścieżka do styles jest poprawna
+import { View } from "react-native";
+import { colors } from "../styles/global"; // upewnij się, że ścieżka do styles jest poprawna
 
 export default function TabLayout() {
   // Pobieramy ten sam query klucz. TanStack Query współdzieli stan,
@@ -142,28 +143,29 @@ export default function TabLayout() {
 
       {/* Ekran ładowania renderowany NAD strukturą Tabs */}
       {isFetching && (
-        <View
-          style={[
-            styles.container,
-            styles.bg,
-            {
-              position: "absolute",
-              left: 0,
-              top: 0,
-              right: 0,
-              bottom: 0,
-              zIndex: 99,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(255,255,255,0.9)", // Opcjonalnie: półprzezroczyste tło, jeśli chcesz widzieć zablokowany interfejs w tle
-            },
-          ]}
-        >
-          <ActivityIndicator size="large" color="#0000ff" />
-          <Text style={{ marginTop: 12, fontSize: 16, color: "#555" }}>
-            Loading your dashboard...
-          </Text>
-        </View>
+        // <View
+        //   style={[
+        //     styles.container,
+        //     styles.bg,
+        //     {
+        //       position: "absolute",
+        //       left: 0,
+        //       top: 0,
+        //       right: 0,
+        //       bottom: 0,
+        //       zIndex: 99,
+        //       justifyContent: "center",
+        //       alignItems: "center",
+        //       backgroundColor: "rgba(255,255,255,0.9)", // Opcjonalnie: półprzezroczyste tło, jeśli chcesz widzieć zablokowany interfejs w tle
+        //     },
+        //   ]}
+        // >
+        //   <ActivityIndicator size="large" color="#0000ff" />
+        //   <Text style={{ marginTop: 12, fontSize: 16, color: "#555" }}>
+        //     Loading your dashboard...
+        //   </Text>
+        // </View>
+        <Loading />
       )}
     </View>
   );
