@@ -109,13 +109,14 @@ const Form = ({
   //     });
   //   },
   // });
+  const isSubmitUnable = !name || season.length == 0 || clothes.length == 0;
 
   const handleUpdate = () => {
     const formData = new FormData();
 
     clearErrors();
 
-    if (!name || season.length == 0 || clothes.length == 0) return;
+    if (isSubmitUnable) return;
 
     formData.append("name", name);
 
@@ -246,6 +247,7 @@ const Form = ({
           handleModeChange={() => handleModeChange && handleModeChange()}
           handleUpdate={handleUpdate}
           mode={mode!}
+          isAble={!isSubmitUnable}
         />
 
         {updateStatus && !data.isOwned && mode === "review" && (

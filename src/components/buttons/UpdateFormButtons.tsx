@@ -7,11 +7,13 @@ const UpdateFormButtons = ({
   handleUpdate,
   handleModeChange,
   deleteItem,
+  isAble = false,
 }: {
   mode: "review" | "edit";
   handleUpdate: () => void;
   handleModeChange: () => void;
   deleteItem: () => void;
+  isAble?: boolean;
 }) => {
   return (
     <View style={updateFormButtonsStyles.buttonsContainer}>
@@ -24,10 +26,12 @@ const UpdateFormButtons = ({
               handleModeChange();
             }
           }}
+          disabled={!isAble}
           style={({ pressed }) => [
             updateFormButtonsStyles.button,
             updateFormButtonsStyles.update,
             pressed && updateFormButtonsStyles.updateActive,
+            !isAble && { opacity: 0.5 },
           ]}
         >
           {({ pressed }) => (

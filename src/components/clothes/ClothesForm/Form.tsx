@@ -134,20 +134,20 @@ const Form = ({
   //   },
   // });
 
+  const isSubmitUnable =
+    !name ||
+    // !brand ||
+    colors.length == 0 ||
+    // !image ||
+    season.length == 0 ||
+    !size;
+
   const handleUpdate = async () => {
     const form = new FormData();
 
     clearErrrors();
 
-    if (
-      !name ||
-      // !brand ||
-      colors.length == 0 ||
-      // !image ||
-      season.length == 0 ||
-      !size
-    )
-      return;
+    if (isSubmitUnable) return;
 
     form.append("name", name);
     form.append("brand", brand);
@@ -292,6 +292,7 @@ const Form = ({
           handleModeChange={() => handleModeChange && handleModeChange()}
           handleUpdate={handleUpdate}
           mode={mode!}
+          isAble={!isSubmitUnable}
         />
 
         {updateStatus && !data.isOwned && mode === "review" && (

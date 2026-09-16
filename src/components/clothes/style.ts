@@ -215,7 +215,8 @@ export const clothesStyles = StyleSheet.create({
     marginTop: 4,
   },
   sizesButton: {
-    width: "15.5%",
+    // width: "15.5%",
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 12,
