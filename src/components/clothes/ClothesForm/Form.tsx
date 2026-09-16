@@ -141,7 +141,7 @@ const Form = ({
 
     if (
       !name ||
-      !brand ||
+      // !brand ||
       colors.length == 0 ||
       // !image ||
       season.length == 0 ||

@@ -115,6 +115,8 @@ const Form = ({
 
     clearErrors();
 
+    if (!name || season.length == 0 || clothes.length == 0) return;
+
     formData.append("name", name);
 
     season.forEach((s) => formData.append("season", s));
