@@ -96,20 +96,18 @@ import HomeView from "../../components/home/HomeView";
 import { styles } from "../styles/global";
 
 export default function HomeScreen() {
-  const { data, isFetched, refetch } = useQuery({
+  const { data, isFetched, refetch, isFetching } = useQuery({
     queryKey: ["userData"],
     queryFn: getData,
-    gcTime: 0,
-    staleTime: 0,
+    // gcTime: 0,
+    // staleTime: 0,
   });
 
   useEffect(() => {
-    if (isFetched && !data) {
-      setTimeout(() => {
-        router.replace("/auth/signin");
-      }, 0);
+    if (isFetched && !isFetching && !data) {
+      router.replace("/auth/signin");
     }
-  }, [data, isFetched]);
+  }, [data, isFetching, isFetched]);
 
   return (
     <View style={[styles.container]}>
