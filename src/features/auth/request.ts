@@ -16,7 +16,7 @@ export const signup = async ({
 };
 
 export const signin = async ({ email, password }: ISignIn) => {
-  return (await api.post("/auth/signin", { email, password })).data;
+  return await api.post("/auth/signin", { email, password });
 };
 
 export const logout = async () => {
