@@ -24,9 +24,11 @@ export const cardStyles = StyleSheet.create({
     backgroundColor: colors.secondary,
     alignItems: "center",
     justifyContent: "center",
+    paddingHorizontal: 4,
   },
   noImageText: {
     color: colors.card,
+    textAlign: "center",
   },
   dataContainer: {
     flex: 1,

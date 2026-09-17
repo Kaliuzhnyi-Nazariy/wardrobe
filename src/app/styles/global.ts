@@ -33,6 +33,16 @@ export const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: "bold",
     fontSize: 72,
+
+    textTransform: "uppercase",
+  },
+  h1_big: {
+    color: colors.primary,
+    fontWeight: "bold",
+    // fontSize: 28,
+    fontSize: 24,
+
+    textTransform: "uppercase",
   },
   button: {
     width: "100%",
@@ -79,6 +89,11 @@ export const styles = StyleSheet.create({
     borderColor: colors.secondary,
     color: colors.secondary,
     marginTop: 36,
+  },
+
+  noDataMesssage: {
+    textAlign: "center",
+    color: colors.primary,
   },
 });
 
