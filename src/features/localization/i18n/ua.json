@@ -94,5 +94,7 @@
   "successfully_moved": "Успішно переміщено!",
 
   "password_changed": "Пароль змінено",
-  "data_updated": "Профіль оновлено"
+  "data_updated": "Профіль оновлено",
+
+  "account_actions": "Дії з акаунтом"
 }

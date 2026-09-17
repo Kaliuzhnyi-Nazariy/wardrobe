@@ -94,5 +94,7 @@
   "successfully_moved": "Przeniesiono pomyślnie!",
 
   "password_changed": "Hasło zostało zmienione",
-  "data_updated": "Profil zaktualizowany"
+  "data_updated": "Profil zaktualizowany",
+
+  "account_actions": "Akcje konta"
 }
