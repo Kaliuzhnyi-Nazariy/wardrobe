@@ -1,4 +1,5 @@
 import { styles } from "@/app/styles/global";
+import { t } from "i18next";
 import { Pressable, Text, View } from "react-native";
 import { updateFormButtonsStyles } from "./styles";
 
@@ -41,7 +42,9 @@ const UpdateFormButtons = ({
                 pressed && updateFormButtonsStyles.updateActiveText,
               ]}
             >
-              {mode === "review" ? "Update" : "Save"}
+              {mode === "review" ? `${t("update")}` : `${t("save")}`}
+              {/* {mode === "review" ? `${t("update")}` : "Save"} */}
+              {/* {mode === "review" ? "Update" : "Save"} */}
             </Text>
           )}
         </Pressable>
@@ -60,7 +63,8 @@ const UpdateFormButtons = ({
                 pressed && updateFormButtonsStyles.deleteActiveText,
               ]}
             >
-              Delete
+              {/* Delete */}
+              {t("delete")}
             </Text>
           )}
         </Pressable>
@@ -82,7 +86,7 @@ const UpdateFormButtons = ({
                 pressed && updateFormButtonsStyles.deleteActiveText,
               ]}
             >
-              Cancel
+              {t("cancel")}
             </Text>
           )}
         </Pressable>

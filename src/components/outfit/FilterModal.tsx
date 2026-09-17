@@ -7,6 +7,7 @@ import FilterModalComponent from "../modals/FilterModalComponent";
 import { filtersModalStyles } from "../modals/style";
 import ChooseClothes from "./ChooseClothes";
 import { ClothesItem } from "./interface";
+import { t } from "i18next";
 
 const FilterModal = ({
   modalVisible,
@@ -78,7 +79,7 @@ const FilterModal = ({
       resetFilters={resetFilters}
     >
       <View style={[filtersModalStyles.field, filtersModalStyles.inputField]}>
-        <Text style={styles.inputName}>Name</Text>
+        <Text style={styles.inputName}>{t("name")}</Text>
         <TextInput
           value={outfitName}
           onChangeText={setNameParam}
@@ -87,7 +88,7 @@ const FilterModal = ({
       </View>
 
       <View style={filtersModalStyles.field}>
-        <Text style={styles.inputName}>Season</Text>
+        <Text style={styles.inputName}>{t("season")}</Text>
         <View style={filtersModalStyles.seasonList}>
           {seasons.map((seas) => {
             const isActive = season.includes(seas);
@@ -106,7 +107,7 @@ const FilterModal = ({
                     isActive && filtersModalStyles.seasonButtonActiveText,
                   ]}
                 >
-                  {seas}
+                  {t(seas)}
                 </Text>
               </Pressable>
             );

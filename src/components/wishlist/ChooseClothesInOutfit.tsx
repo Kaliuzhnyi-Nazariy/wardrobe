@@ -4,6 +4,7 @@ import { addClothes } from "@/features/clothes/request";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
+import { t } from "i18next";
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
@@ -114,7 +115,7 @@ export const ChooseClothesInOutfit = ({
 
   return (
     <View style={{ width: "100%", marginTop: 16 }}>
-      <Text style={styles.inputName}>Select clothes</Text>
+      <Text style={styles.inputName}>{t("select_clothes")}</Text>
 
       <View style={wishlistStyles.list}>
         {chosenClothes.map((cc) => (
@@ -147,7 +148,7 @@ export const ChooseClothesInOutfit = ({
                 <Text
                   style={[wishlistStyles.text, wishlistStyles.textButtonChosen]}
                 >
-                  Add from wardrobe
+                  {t("add_from_wardrobe")}
                 </Text>
               )}
             </Pressable>
@@ -170,7 +171,7 @@ export const ChooseClothesInOutfit = ({
                     pressed && wishlistStyles.textButtonChosen,
                   ]}
                 >
-                  Add new
+                  {t("add_new")}
                 </Text>
               )}
             </Pressable>
@@ -183,7 +184,7 @@ export const ChooseClothesInOutfit = ({
             }}
             style={[styles.button, wishlistStyles.cancelBtn]}
           >
-            <Text>Close</Text>
+            <Text>{t("close")}</Text>
           </Pressable>
         )}
 
@@ -200,6 +201,7 @@ export const ChooseClothesInOutfit = ({
                 }}
               >
                 <Name
+                  title={t("name")}
                   loadingState={isPending}
                   name={newClothesName}
                   setName={setNewClothesName}
@@ -239,7 +241,7 @@ export const ChooseClothesInOutfit = ({
 
                 <Name
                   loadingState={isPending}
-                  title="Link to store"
+                  title={t("store_link")}
                   name={newClothesLinkToStore}
                   setName={setNewClothesLinkToStore}
                   placeholder="Enter the link"
@@ -264,7 +266,8 @@ export const ChooseClothesInOutfit = ({
                           pressed && wishlistStyles.textButtonAddPressed,
                         ]}
                       >
-                        Add
+                        {/* Add */}
+                        {t("add")}
                       </Text>
                     )}
                   </Pressable>
@@ -284,7 +287,8 @@ export const ChooseClothesInOutfit = ({
                           pressed && wishlistStyles.textResetBtnPressed,
                         ]}
                       >
-                        Reset
+                        {/* Reset */}
+                        {t("reset")}
                       </Text>
                     )}
                   </Pressable>

@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/global";
 import { getClothes } from "@/features/clothes/request";
 import { useQuery } from "@tanstack/react-query";
+import { t } from "i18next";
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useDebounce } from "use-debounce";
@@ -55,22 +56,10 @@ const ChooseClothes = ({
 
   return (
     <View style={{ marginTop: 16, width: "100%" }}>
-      <Text style={styles.inputName}>Clothes</Text>
+      <Text style={styles.inputName}>{t("clothes")}</Text>
       {showList && (
         <>
           {selectedClothes.length > 0 ? (
-            // <View style={addOutfitStyle.list}>
-            //   {selectedClothes.map(({ name, _id }) => (
-            //     <View key={_id} style={addOutfitStyle.chosenClothesItem}>
-            //       <Text style={addOutfitStyle.chosenClothesItemText}>
-            //         {name}
-            //       </Text>
-            //       <Pressable onPress={() => handleRemove({ id: _id })}>
-            //         <Text style={addOutfitStyle.chosenClothesItemText}>X</Text>
-            //       </Pressable>
-            //     </View>
-            //   ))}
-            // </View>
             <ScrollView
               horizontal
               showsHorizontalScrollIndicator={false}
@@ -89,7 +78,7 @@ const ChooseClothes = ({
             </ScrollView>
           ) : (
             <View style={addOutfitStyle.list}>
-              <Text>Add clothes</Text>
+              <Text>{t("add_clothes")}</Text>
             </View>
           )}
         </>
@@ -120,7 +109,9 @@ const ChooseClothes = ({
                         }}
                         style={addOutfitStyle.button}
                       >
-                        <Text style={addOutfitStyle.buttonText}>Add</Text>
+                        <Text style={addOutfitStyle.buttonText}>
+                          {t("add")}
+                        </Text>
                       </Pressable>
                     ) : (
                       <Text>Selected</Text>
@@ -136,11 +127,11 @@ const ChooseClothes = ({
             onPress={() => setAddClothesMode(false)}
             style={addOutfitStyle.cancelButton}
           >
-            <Text style={addOutfitStyle.cancelButtonText}>Cancel</Text>
+            <Text style={addOutfitStyle.cancelButtonText}>{t("cancel")}</Text>
           </Pressable>
         </>
       ) : (
-        <ModalButton text="Add clothes" fn={setAddClothesMode} />
+        <ModalButton text={t("add_clothes")} fn={setAddClothesMode} />
       )}
     </View>
   );

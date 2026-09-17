@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { Pressable, Text, View } from "react-native";
 import { buttonStyles } from "./style";
 
@@ -36,7 +37,8 @@ const OperationButtons = ({
                   pressed && buttonStyles.addBtnTextActive,
                 ]}
               >
-                Add
+                {/* Add */}
+                {t("add")}
               </Text>
             )}
           </Pressable>
@@ -57,7 +59,7 @@ const OperationButtons = ({
                   pressed && buttonStyles.cancelBtnTextActive,
                 ]}
               >
-                Close
+                {t("close")}
               </Text>
             )}
           </Pressable>

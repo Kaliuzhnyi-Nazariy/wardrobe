@@ -21,6 +21,7 @@ export const wishlistStyles = StyleSheet.create({
   text: {
     fontWeight: 700,
     color: colors.secondary,
+    textAlign: "center",
   },
   textButtonChosen: {
     color: colors.card,

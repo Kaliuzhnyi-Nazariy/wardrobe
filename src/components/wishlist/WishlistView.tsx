@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { Link } from "expo-router";
+import { t } from "i18next";
 import { Fragment } from "react";
 import { ScrollView, Text, View } from "react-native";
 import ClothesItem from "../clothes/ClothesItem";
@@ -51,7 +52,7 @@ const WishlistView = ({
   if (!items || items.length === 0) {
     return (
       <View style={[styles.container, styles.bg]}>
-        <Text>No clothes added</Text>
+        <Text style={{ textAlign: "center" }}>{t("no_clothes_added")}</Text>
       </View>
     );
   }
@@ -113,7 +114,7 @@ const WishlistView = ({
           <View
             style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           >
-            <Text style={{ color: "black" }}>No data</Text>
+            <Text style={styles.noDataMesssage}>{t("no_wishlist_added")}</Text>
           </View>
         )}
       </ScrollView>

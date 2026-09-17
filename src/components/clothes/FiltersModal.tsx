@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { usePathname, useRouter } from "expo-router";
+import { t } from "i18next";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import FilterModalComponent from "../modals/FilterModalComponent";
@@ -106,7 +107,7 @@ const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
       resetFilters={resetFilters}
     >
       <View style={[clothesStyles.field, clothesStyles.inputField]}>
-        <Text style={styles.inputName}>Name</Text>
+        <Text style={styles.inputName}>{t("name")}</Text>
         <TextInput
           value={name}
           onChangeText={setNameParam}
@@ -115,7 +116,7 @@ const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
       </View>
 
       <View style={clothesStyles.field}>
-        <Text style={styles.inputName}>Season</Text>
+        <Text style={styles.inputName}>{t("season")}</Text>
         <View style={filtersModalStyles.seasonList}>
           {seasons.map((seas) => {
             const isActive = season.includes(seas);
@@ -134,7 +135,8 @@ const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
                     isActive && filtersModalStyles.seasonButtonActiveText,
                   ]}
                 >
-                  {seas}
+                  {t(seas)}
+                  {/* {seas} */}
                 </Text>
               </Pressable>
             );
@@ -143,7 +145,7 @@ const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
       </View>
 
       <View style={[clothesStyles.field, clothesStyles.inputField]}>
-        <Text style={styles.inputName}>Color</Text>
+        <Text style={styles.inputName}>{t("colors")}</Text>
         <TextInput
           value={color}
           onChangeText={setColorParam}
@@ -152,7 +154,7 @@ const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
       </View>
 
       <View style={clothesStyles.field}>
-        <Text style={styles.inputName}>Sizes</Text>
+        <Text style={styles.inputName}>{t("size")}</Text>
         <View style={clothesStyles.sizesList}>
           {sizes.map((s) => {
             const isActive = size && size.includes(s);

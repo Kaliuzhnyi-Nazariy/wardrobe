@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/global";
 import * as ImagePicker from "expo-image-picker";
 import { ImagePickerAsset } from "expo-image-picker";
+import { t } from "i18next";
 import { Alert, Image, Pressable, Text, View } from "react-native";
 import { clothesStyles } from "../style";
 
@@ -73,7 +74,7 @@ const Photos = ({
 
   return (
     <View style={{ width: "100%", marginTop: 16 }}>
-      <Text style={styles.inputName}>Clothing Photo</Text>
+      <Text style={styles.inputName}>{t("clothing_photo")}</Text>
       <View style={{ flexDirection: "row", gap: 10, marginTop: 5 }}>
         <Pressable
           disabled={loadingState}
@@ -90,7 +91,7 @@ const Photos = ({
                 pressed && clothesStyles.photoButtonTextPressed,
               ]}
             >
-              📸 Take Photo
+              📸 {t("take_photo")}
             </Text>
           )}
         </Pressable>
@@ -109,7 +110,7 @@ const Photos = ({
                 pressed && clothesStyles.photoButtonPressed,
               ]}
             >
-              🖼️ Gallery
+              🖼️ {t("gallery")}
             </Text>
           )}
         </Pressable>

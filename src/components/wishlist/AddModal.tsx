@@ -5,6 +5,7 @@ import { createOutfit } from "@/features/outfit/requests";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
+import { t } from "i18next";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
@@ -225,7 +226,7 @@ const AddModal = ({
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
     >
-      <AddModalLayout title="Add to wishlist">
+      <AddModalLayout title={t("add_to_wishlist")}>
         <View style={wishlistStyles.btnContainer}>
           <Pressable
             onPress={() => setMode("clothes")}
@@ -241,7 +242,7 @@ const AddModal = ({
                 mode === "clothes" && wishlistStyles.textButtonChosen,
               ]}
             >
-              Clothes
+              {t("clothes")}
             </Text>
           </Pressable>
           <Pressable
@@ -258,7 +259,7 @@ const AddModal = ({
                 mode === "outfit" && wishlistStyles.textButtonChosen,
               ]}
             >
-              Outfit
+              {t("outfits")}
             </Text>
           </Pressable>
         </View>
@@ -268,13 +269,14 @@ const AddModal = ({
         >
           {!mode ? (
             <Text>
-              <Text>Select what you want to add!</Text>
+              <Text>{t("add_wishlist_message")}</Text>
             </Text>
           ) : (
             <>
               {mode === "clothes" ? (
                 <>
                   <Name
+                    title={t("name")}
                     loadingState={addingClothes}
                     name={clothesName}
                     setName={setClothesName}
@@ -314,7 +316,7 @@ const AddModal = ({
 
                   <Name
                     loadingState={addingClothes}
-                    title="Link to store"
+                    title={t("store_link")}
                     name={linkToStore}
                     setName={setLinkToStore}
                     placeholder="Enter the link"
@@ -333,6 +335,7 @@ const AddModal = ({
               ) : (
                 <>
                   <Name
+                    title={t("name")}
                     loadingState={outfitPending}
                     name={outfitName}
                     setName={setOutfitName}
@@ -388,7 +391,7 @@ const AddModal = ({
               pressed && wishlistStyles.closeBtnTextPressed,
             ]}
           >
-            Close
+            {t("close")}
           </Text>
         )}
       </Pressable>

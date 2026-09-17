@@ -5,7 +5,9 @@ import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
+import { t } from "i18next";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { colors, styles } from "../styles/global";
@@ -68,6 +70,12 @@ export default function Signup() {
     signupFn({ email, name, password, confirmPassword });
   };
 
+  const { i18n } = useTranslation();
+
+  // console.log("Aktualny język to:", i18n.language);
+
+  const lang = i18n.language;
+
   return (
     // <ScrollView style={{}} contentContainerStyle={[styles.main, authStyles.page]}>
     <ScrollView
@@ -75,10 +83,13 @@ export default function Signup() {
       contentContainerStyle={[authStyles.page, styles.main]}
     >
       {/* <View style={[styles.main, authStyles.page]}> */}
-      <Text style={styles.h1}>SIGN UP</Text>
+      <Text style={[lang === "en" ? styles.h1 : styles.h1_big]}>
+        {t("sign_up")}
+      </Text>
+      {/* <Text style={styles.h1}>{t("sign_up")}</Text> */}
       <View style={authStyles.form}>
         <View style={authStyles.field}>
-          <Text style={styles.inputName}>Name</Text>
+          <Text style={styles.inputName}>{t("user_name")}</Text>
           <TextInput
             value={name}
             onChangeText={setName}
@@ -104,7 +115,7 @@ export default function Signup() {
           />
         </View>
         <View style={authStyles.field && authStyles.passwordField}>
-          <Text style={styles.inputName}>Password</Text>
+          <Text style={styles.inputName}>{t("password")}</Text>
           {/* <Text style={authStyles.inputName}>Password</Text> */}
           <TextInput
             value={password}
@@ -129,7 +140,7 @@ export default function Signup() {
           </Pressable>
         </View>
         <View style={authStyles.field && authStyles.passwordField}>
-          <Text style={styles.inputName}>Confirm password</Text>
+          <Text style={styles.inputName}>{t("confirm_password")}</Text>
           {/* <Text style={authStyles.inputName}>Confirm password</Text> */}
           <TextInput
             value={confirmPassword}
@@ -185,15 +196,16 @@ export default function Signup() {
               pressed && authStyles.buttonTextPressed,
             ]}
           >
-            Sign up
+            {t("sign_up")}
           </Text>
         )}
       </Pressable>
 
       <Text style={authStyles.linkMessage}>
-        You have an account?{" "}
+        {/* You have an account?{" "} */}
+        {t("signin_message")}
         <Link href="/auth/signin" style={authStyles.link}>
-          Sign in!
+          {t("sign_in")}!
         </Link>
       </Text>
     </ScrollView>

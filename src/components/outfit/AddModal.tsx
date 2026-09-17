@@ -3,6 +3,7 @@ import { createOutfit } from "@/features/outfit/requests";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ImagePickerAsset } from "expo-image-picker";
+import { t } from "i18next";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 import Name from "../clothes/AddModal/Name";
@@ -91,8 +92,13 @@ const AddModal = ({
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
     >
-      <AddModalLayout title="Add outfit">
-        <Name loadingState={isPending} name={name} setName={setName} />
+      <AddModalLayout title={t("add_outfit")}>
+        <Name
+          title={t("name")}
+          loadingState={isPending}
+          name={name}
+          setName={setName}
+        />
         <Seasons
           loadingState={isPending}
           season={seasons}

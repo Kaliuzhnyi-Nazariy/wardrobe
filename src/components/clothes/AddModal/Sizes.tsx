@@ -1,5 +1,6 @@
 import { styles } from "@/app/styles/global";
 import { Size } from "@/features/clothes/interface";
+import { t } from "i18next";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { clothesStyles } from "../style";
@@ -17,7 +18,7 @@ const Sizes = ({
 
   return (
     <View style={{ marginBottom: 24, marginTop: 16 }}>
-      <Text style={styles.inputName}>Sizes</Text>
+      <Text style={styles.inputName}>{t("size")}</Text>
       <View style={clothesStyles.sizesList}>
         {sizes.map((item) => (
           <Pressable

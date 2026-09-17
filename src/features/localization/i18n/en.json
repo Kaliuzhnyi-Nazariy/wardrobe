@@ -1,0 +1,81 @@
+{
+  "greeting_welcome": "Welcome to WARDROBE!",
+  "greeting_button": "Home",
+  "sign_in": "Sign in",
+  "email": "Email",
+  "password": "Password",
+  "signup_message": "You don't have an account? ",
+  "sign_up": "Sign up",
+  "confirm_password": "Confirm password",
+  "signin_message": "You have an account? ",
+
+  "home": "Home",
+  "clothes": "Clothes",
+  "outfits": "Outfits",
+  "wishlist": "Wishlist",
+  "account": "Account",
+
+  "name": "Name",
+  "user_name": "Name",
+
+  "filters": "Filters",
+
+  "no_image": "No image",
+  "clothing_photo": "Clothing photo",
+  "take_photo": "Take photo",
+  "gallery": "Gallery",
+
+  "season": "Season",
+  "winter": "winter",
+  "spring": "spring",
+  "summer": "summer",
+  "fall": "fall",
+
+  "size": "Size",
+  "colors": "Colors",
+  "brand": "Brand",
+  "store_link": "Store link",
+
+  "back": "Back",
+  "update": "Update",
+  "delete": "Delete",
+  "cancel": "Cancel",
+  "reset": "Reset",
+  "close": "Close",
+
+  "add_clothes": "Add clothes",
+  "add_outfit": "Add outfit",
+  "add": "add",
+  "selected": "selected",
+
+  "add_to_wishlist": "Add to wishlist",
+  "add_wishlist_message": "Select what you want to add!",
+
+  "select_clothes": "Select clothes",
+  "add_from_wardrobe": "Add from wardrobe",
+  "add_new": "Add new",
+
+  "wardrobe": "Wardrobe",
+  "remove_clothes": "Remove clothes",
+  "remove_outfits": "Remove outfits",
+
+  "user": "User",
+  "change_password": "Change password",
+  "update_data": "Update data",
+
+  "form": "Form",
+  "leave_your_opinion": "Leave your opinion",
+
+  "change_language": "Change language",
+  "logout": "Logout",
+  "delete_account": "Delete account",
+
+  "apply_filter": "Apply filters",
+  "reset_filters": "Reset filters",
+  "add_clothes_item": "Add clothing item",
+  "add_to_wardrobe": "Add to wardrobe",
+  "save": "Save",
+  "no_clothes_added": "Your wardrobe is empty. Add your first clothing item!",
+  "no_outfits_added": "No outfits created yet. Combine your clothes into stylish looks!",
+  "no_wishlist_added": "Your wishlist is empty. Save items you plan to buy here!"
+}

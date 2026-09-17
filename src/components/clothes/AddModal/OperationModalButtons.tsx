@@ -1,4 +1,5 @@
 import { buttonStyles } from "@/components/modals/style";
+import { t } from "i18next";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 
@@ -39,7 +40,8 @@ const OperationModalButtons = ({
                   pressed && buttonStyles.addBtnTextActive,
                 ]}
               >
-                Add
+                {/* Add */}
+                {t("add")}
               </Text>
             )}
           </Pressable>
@@ -61,7 +63,8 @@ const OperationModalButtons = ({
                   pressed && buttonStyles.cancelBtnTextActive,
                 ]}
               >
-                Reset
+                {/* Reset */}
+                {t("reset")}
               </Text>
             )}
           </Pressable>

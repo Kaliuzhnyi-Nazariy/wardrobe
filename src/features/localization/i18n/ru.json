@@ -1,0 +1,81 @@
+{
+  "greeting_welcome": "Добро пожаловать в WARDROBE!",
+  "greeting_button": "Главная",
+  "sign_in": "Войти",
+  "email": "Email",
+  "password": "Пароль",
+  "signup_message": "Нет аккаунта? ",
+  "sign_up": "Зарегистрироваться",
+  "confirm_password": "Подтвердите пароль",
+  "signin_message": "Уже есть аккаунт? ",
+
+  "home": "Главная",
+  "clothes": "Одежда",
+  "outfits": "Образы",
+  "wishlist": "Вишлист",
+  "account": "Профиль",
+
+  "name": "Название",
+  "user_name": "Имя",
+
+  "filters": "Фильтры",
+
+  "no_image": "Нет изображения",
+  "clothing_photo": "Фото одежды",
+  "take_photo": "Сделать фото",
+  "gallery": "Галерея",
+
+  "season": "Сезон",
+  "winter": "зима",
+  "spring": "весна",
+  "summer": "лето",
+  "fall": "осень",
+
+  "size": "Размер",
+  "colors": "Цвета",
+  "brand": "Бренд",
+  "store_link": "Ссылка на магазин",
+
+  "back": "Назад",
+  "update": "Обновить",
+  "delete": "Удалить",
+  "cancel": "Отмена",
+  "reset": "Сбросить",
+  "close": "Закрыть",
+
+  "add_clothes": "Добавить одежду",
+  "add_outfit": "Добавить образ",
+  "add": "добавить",
+  "selected": "выбрано",
+
+  "add_to_wishlist": "Добавить в вишлист",
+  "add_wishlist_message": "Выберите, что вы хотите добавить!",
+
+  "select_clothes": "Выбрать одежду",
+  "add_from_wardrobe": "Добавить из гардероба",
+  "add_new": "Добавить новую",
+
+  "wardrobe": "Гардероб",
+  "remove_clothes": "Удалить одежду",
+  "remove_outfits": "Удалить образы",
+
+  "user": "Пользователь",
+  "change_password": "Изменить пароль",
+  "update_data": "Обновить данные",
+
+  "form": "Форма",
+  "leave_your_opinion": "Оставить отзыв",
+
+  "change_language": "Изменить язык",
+  "logout": "Выйти",
+  "delete_account": "Удалить аккаунт",
+
+  "apply_filter": "Применить фильтры",
+  "reset_filters": "Сбросить фильтры",
+  "add_clothes_item": "Добавить вещь",
+  "add_to_wardrobe": "Добавить в гардероб",
+  "save": "Сохранить",
+  "no_clothes_added": "Ваш гардероб пуст. Добавьте свою первую вещь!",
+  "no_outfits_added": "Еще не создано ни одного образа. Сочетайте свою одежду в стильные луки!",
+  "no_wishlist_added": "Ваш вишлист пуст. Сохраняйте здесь вещи, которые планируете купить!"
+}

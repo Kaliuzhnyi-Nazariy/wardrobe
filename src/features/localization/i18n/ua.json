@@ -1,0 +1,81 @@
+{
+  "greeting_welcome": "Вітаємо в WARDROBE!",
+  "greeting_button": "Головна",
+  "sign_in": "Увійти",
+  "email": "Email",
+  "password": "Пароль",
+  "signup_message": "Немає акаунта? ",
+  "sign_up": "Зареєструватися",
+  "confirm_password": "Підтвердьте пароль",
+  "signin_message": "Вже є акаунт? ",
+
+  "home": "Головна",
+  "clothes": "Одяг",
+  "outfits": "Образи",
+  "wishlist": "Вішліст",
+  "account": "Профіль",
+
+  "name": "Назва",
+  "user_name": "Ім'я",
+
+  "filters": "Фільтри",
+
+  "no_image": "Немає зображення",
+  "clothing_photo": "Фото одягу",
+  "take_photo": "Зробити фото",
+  "gallery": "Галерея",
+
+  "season": "Сезон",
+  "winter": "зима",
+  "spring": "весна",
+  "summer": "літо",
+  "fall": "осінь",
+
+  "size": "Розмір",
+  "colors": "Кольори",
+  "brand": "Бренд",
+  "store_link": "Посилання на магазин",
+
+  "back": "Назад",
+  "update": "Оновити",
+  "delete": "Видалити",
+  "cancel": "Скасувати",
+  "reset": "Скинути",
+  "close": "Закрити",
+
+  "add_clothes": "Додати одяг",
+  "add_outfit": "Додати образ",
+  "add": "додати",
+  "selected": "вибрано",
+
+  "add_to_wishlist": "Додати до вішлісту",
+  "add_wishlist_message": "Виберіть, що ви хочете додати!",
+
+  "select_clothes": "Вибрати одяг",
+  "add_from_wardrobe": "Додати з гардероба",
+  "add_new": "Додати нову",
+
+  "wardrobe": "Гардероб",
+  "remove_clothes": "Видалити одяг",
+  "remove_outfits": "Видалити образи",
+
+  "user": "Користувач",
+  "change_password": "Змінити пароль",
+  "update_data": "Оновити дані",
+
+  "form": "Форма",
+  "leave_your_opinion": "Залишіть свій відгук",
+
+  "change_language": "Змінити мову",
+  "logout": "Вийти",
+  "delete_account": "Видалити акаунт",
+
+  "apply_filter": "Застосувати фільтри",
+  "reset_filters": "Скинути фільтри",
+  "add_clothes_item": "Додати річ",
+  "add_to_wardrobe": "Додати до шафи",
+  "save": "Зберегти",
+  "no_clothes_added": "Ваша шафа порожня. Додайте свою першу річ!",
+  "no_outfits_added": "Ще не створено жодного образу. Поєднуйте свій одяг у стильні луки!",
+  "no_wishlist_added": "Ваш вішліст порожній. Зберігайте тут речі, які плануєте купити!"
+}
