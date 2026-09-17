@@ -1,3 +1,5 @@
+import "@/features/localization/i18n";
+
 import { getData } from "@/features/user/requests";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Image } from "expo-image";

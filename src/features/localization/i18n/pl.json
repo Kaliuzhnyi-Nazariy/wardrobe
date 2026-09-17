@@ -1,0 +1,81 @@
+{
+  "greeting_welcome": "Witaj w WARDROBE!",
+  "greeting_button": "Start",
+  "sign_in": "Zaloguj się",
+  "email": "Email",
+  "password": "Hasło",
+  "signup_message": "Nie masz konta? ",
+  "sign_up": "Zarejestruj się",
+  "confirm_password": "Potwierdź hasło",
+  "signin_message": "Masz już konto? ",
+
+  "home": "Główna",
+  "clothes": "Ubrania",
+  "outfits": "Stylizacje",
+  "wishlist": "Lista życzeń",
+  "account": "Konto",
+
+  "name": "Nazwa",
+  "user_name": "Imię",
+
+  "filters": "Filtry",
+
+  "no_image": "Brak zdjęcia",
+  "clothing_photo": "Zdjęcie ubrania",
+  "take_photo": "Zrób zdjęcie",
+  "gallery": "Galeria",
+
+  "season": "Sezon",
+  "winter": "zima",
+  "spring": "wiosna",
+  "summer": "lato",
+  "fall": "jesień",
+
+  "size": "Rozmiar",
+  "colors": "Kolory",
+  "brand": "Marka",
+  "store_link": "Link do sklepu",
+
+  "back": "Wstecz",
+  "update": "Aktualizuj",
+  "delete": "Usuń",
+  "cancel": "Anuluj",
+  "reset": "Resetuj",
+  "close": "Zamknij",
+
+  "add_clothes": "Dodaj ubranie",
+  "add_outfit": "Dodaj stylizację",
+  "add": "dodaj",
+  "selected": "wybrane",
+
+  "add_to_wishlist": "Dodaj do listy życzeń",
+  "add_wishlist_message": "Wybierz, co chcesz dodać!",
+
+  "select_clothes": "Wybierz ubrania",
+  "add_from_wardrobe": "Dodaj z szafy",
+  "add_new": "Dodaj nowe",
+
+  "wardrobe": "Szafa",
+  "remove_clothes": "Usuń ubrania",
+  "remove_outfits": "Usuń stylizacje",
+
+  "user": "Użytkownik",
+  "change_password": "Zmień hasło",
+  "update_data": "Aktualizuj dane",
+
+  "form": "Formularz",
+  "leave_your_opinion": "Zostaw opinię",
+
+  "change_language": "Zmień język",
+  "logout": "Wyloguj się",
+  "delete_account": "Usuń konto",
+
+  "apply_filter": "Zastosuj filtry",
+  "reset_filters": "Wyczyść filtry",
+  "add_clothes_item": "Dodaj element garderoby",
+  "add_to_wardrobe": "Dodaj do szafy",
+  "save": "Zapisz",
+  "no_clothes_added": "Twoja szafa jest pusta. Dodaj swój pierwszy element garderoby!",
+  "no_outfits_added": "Nie utworzono jeszcze żadnych stylizacji. Połącz ubrania w gotowe zestawy!",
+  "no_wishlist_added": "Twoja lista życzeń jest pusta. Zapisuj tutaj rzeczy, które planujesz kupić!"
+}
