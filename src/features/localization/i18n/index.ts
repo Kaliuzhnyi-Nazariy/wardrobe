@@ -1,4 +1,5 @@
 import * as Localization from "expo-localization";
+import * as SecureStore from "expo-secure-store";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
@@ -9,6 +10,8 @@ import ua from "./ua.json";
 
 const systemLanguage = Localization.getLocales()[0]?.languageCode ?? "en";
 
+const storedLanguage = SecureStore.getItem("user-language") ?? systemLanguage;
+
 i18n.use(initReactI18next).init({
   resources: {
     en: { translation: en },
@@ -16,7 +19,7 @@ i18n.use(initReactI18next).init({
     uk: { translation: ua },
     ru: { translation: ru },
   },
-  lng: systemLanguage,
+  lng: storedLanguage,
   fallbackLng: "en",
   interpolation: {
     escapeValue: false,
