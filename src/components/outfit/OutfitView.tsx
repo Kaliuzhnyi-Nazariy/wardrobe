@@ -1,13 +1,13 @@
 import { styles } from "@/app/styles/global";
 import { Season } from "@/features/clothes/interface";
 import { Link } from "expo-router";
+import { t } from "i18next";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { clothesStyles } from "../clothes/style";
+import Loading from "../Loading/Loading";
 import { ClothesItem } from "./interface";
 import OutfitItem from "./OutfitItem";
-import { outfitViewStyles } from "./style";
-import Loading from "../Loading/Loading";
 
 export interface IOutfit {
   _id: string;
@@ -62,7 +62,7 @@ const OutfitView = ({
           </>
         ) : (
           <View style={styles.container}>
-            <Text>No data</Text>
+            <Text style={styles.noDataMesssage}>{t("no_outfits_added")}</Text>
           </View>
         )}
       </ScrollView>

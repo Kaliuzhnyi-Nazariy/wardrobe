@@ -1,5 +1,6 @@
 import { styles } from "@/app/styles/global";
 import { Season } from "@/features/clothes/interface";
+import { t } from "i18next";
 import { Pressable, Text, View } from "react-native";
 import { clothesStyles } from "../style";
 
@@ -27,7 +28,7 @@ const Seasons = ({
 
   return (
     <View style={{ marginTop: 16 }}>
-      <Text style={styles.inputName}>Seasons</Text>
+      <Text style={styles.inputName}>{t("season")}</Text>
       <View style={clothesStyles.seasonsList}>
         {seasons.map((seas) => (
           <Pressable
@@ -46,7 +47,7 @@ const Seasons = ({
                   : clothesStyles.seasonsButtonText,
               ]}
             >
-              {seas}
+              {t(seas)}
             </Text>
           </Pressable>
         ))}

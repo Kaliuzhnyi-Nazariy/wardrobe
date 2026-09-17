@@ -6,6 +6,7 @@ import { deleteAllOutfits } from "@/features/outfit/requests";
 import { deleteUserAccount } from "@/features/user/requests";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
+import { t } from "i18next";
 import { Linking, ScrollView, Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { styles } from "../styles/global";
@@ -97,35 +98,52 @@ export default function Account() {
   return (
     <View style={[styles.bg, styles.container, { marginVertical: 60 }]}>
       <View style={accountStyles.accHeader}>
-        <Text style={accountStyles.accHeaderText}>Account</Text>
+        <Text style={accountStyles.accHeaderText}>{t("account")}</Text>
+        {/* <Text style={accountStyles.accHeaderText}>Account</Text> */}
       </View>
       <ScrollView
         style={{ flex: 1, width: "100%" }}
         contentContainerStyle={accountStyles.accView}
       >
         <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
-          <Text style={styles.inputName}>Wardrobe</Text>
-          <AccButton text="Remove clothes" fn={deleteClothes} />
-          <AccButton text="Remove outfits" fn={deleteOutfitss} />
-
-          <Text style={styles.inputName}>User</Text>
+          <Text style={styles.inputName}>{t("wardrobe")}</Text>
+          {/* <Text style={styles.inputName}>Wardrobe</Text> */}
           <AccButton
-            text="Change password"
+            // text="Remove clothes"
+            text={t("remove_clothes")}
+            fn={deleteClothes}
+          />
+          <AccButton
+            // text="Remove outfits"
+            text={t("remove_outfits")}
+            fn={deleteOutfitss}
+          />
+
+          <Text style={styles.inputName}>{t("user")}</Text>
+          <AccButton
+            // text="Change password"
+            text={t("change_password")}
             fn={() => redirect("/changePassword/changePassword")}
           />
           <AccButton
-            text="Update data"
+            text={t("update_data")}
+            // text="Update data"
             fn={() => redirect("/updateUser/updateUserdata")}
           />
+          <AccButton
+            text={t("change_language")}
+            // text="Change Language"
+            fn={() => redirect("/changeLanguage/changeLanguage")}
+          />
           <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
-            <Text style={styles.inputName}>Form</Text>
-            <AccButton text="Leave you opinion" fn={formLink} />
+            <Text style={styles.inputName}>{t("form")}</Text>
+            <AccButton text={t("leave_your_opinion")} fn={formLink} />
           </View>
         </View>
 
         <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
-          <AccButton text="Logout" fn={logoutFn} />
-          <AccButton text="Delete account" fn={deleteAccount} />
+          <AccButton text={t("logout")} fn={logoutFn} />
+          <AccButton text={t("delete_account")} fn={deleteAccount} />
         </View>
 
         {/* <Text>Account buttons</Text> */}

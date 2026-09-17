@@ -1,4 +1,5 @@
 import { styles } from "@/app/styles/global";
+import { t } from "i18next";
 import { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { clothesStyles } from "../style";
@@ -41,7 +42,7 @@ const Colors = ({
 
   return (
     <View style={{ marginTop: 16, width: "100%" }}>
-      <Text style={styles.inputName}>Colors</Text>
+      <Text style={styles.inputName}>{t("colors")}</Text>
       <View style={clothesStyles.inlineRow}>
         <TextInput
           accessible={!loadingState}
@@ -55,7 +56,7 @@ const Colors = ({
           style={[clothesStyles.addButton]}
           onPress={() => handleColorInput()}
         >
-          <Text style={clothesStyles.addButtonText}>Add</Text>
+          <Text style={clothesStyles.addButtonText}>{t("add")}</Text>
         </Pressable>
       </View>
 

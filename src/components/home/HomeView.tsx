@@ -1,5 +1,6 @@
 import { styles } from "@/app/styles/global";
 import { Link } from "expo-router";
+import { t } from "i18next";
 import { Text, View } from "react-native";
 import { homeStyles } from "./styles";
 
@@ -21,7 +22,7 @@ const HomeView = (data: {
         </Text>
         <View style={[homeStyles.dataContainer, homeStyles.userData]}>
           <Text style={homeStyles.text}>
-            Name: {data.userData?.name ?? "no data"}
+            {t("user_name")}: {data.userData?.name ?? "no data"}
           </Text>
           <Text style={homeStyles.text}>
             Email: {data.userData?.email ?? "no data"}
@@ -31,14 +32,14 @@ const HomeView = (data: {
         <View style={homeStyles.data}>
           <Link href={"/(tabs)/clothes"} style={homeStyles.dataClothContainer}>
             <View style={{ flexDirection: "column", gap: 8 }}>
-              <Text style={homeStyles.text}>Clothes</Text>
+              <Text style={homeStyles.text}>{t("clothes")}</Text>
               <Text style={homeStyles.text}>{data.clothesCount}</Text>
             </View>
           </Link>
 
           <Link href={"/(tabs)/fits"} style={homeStyles.dataClothContainer}>
             <View style={{ flexDirection: "column", gap: 8 }}>
-              <Text style={homeStyles.text}>Outfits</Text>
+              <Text style={homeStyles.text}>{t("outfits")}</Text>
               <Text style={homeStyles.text}>{data.outfitCount}</Text>
             </View>
           </Link>

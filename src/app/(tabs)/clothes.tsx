@@ -1,12 +1,13 @@
-import ClothesView from "../../components/clothes/ClothesView";
 import ModalButton from "@/components/buttons/ModalButton";
 import AddModal from "@/components/clothes/AddModal/AddModal";
 import FiltersModal from "@/components/clothes/FiltersModal";
 import { getClothes } from "@/features/clothes/request";
 import { useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 import { useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import ClothesView from "../../components/clothes/ClothesView";
 import { styles } from "../styles/global";
 
 export default function ClothesScreen() {
@@ -39,7 +40,7 @@ export default function ClothesScreen() {
   return (
     <SafeAreaProvider style={[styles.container, styles.bg]}>
       <SafeAreaView style={[styles.main, { marginVertical: 40 }]}>
-        <ModalButton text="Filters" fn={setFilterModalVisible} />
+        <ModalButton text={t("filters")} fn={setFilterModalVisible} />
         <FiltersModal
           modalVisible={filterModalVisible}
           setModalVisible={setFilterModalVisible}
@@ -47,7 +48,7 @@ export default function ClothesScreen() {
 
         <ClothesView isFetching={isFetching} data={data} />
 
-        <ModalButton text="+ Add Clothes" fn={setModalVisible} />
+        <ModalButton text={"+ " + t("add_clothes")} fn={setModalVisible} />
 
         <AddModal
           modalVisible={modalVisible}

@@ -1,5 +1,6 @@
 import { Season } from "@/features/clothes/interface";
 import { Image } from "expo-image";
+import { t } from "i18next";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import Card from "../card/Card";
@@ -29,7 +30,7 @@ const OutfitItem = ({
         />
       ) : (
         <View style={[cardStyles.imageView, cardStyles.noImage]}>
-          <Text style={[cardStyles.noImageText]}>No image</Text>
+          <Text style={[cardStyles.noImageText]}>{t("no_image")}</Text>
         </View>
       )}
 
@@ -42,14 +43,14 @@ const OutfitItem = ({
           }}
         >
           <View style={[cardStyles.dataBlock]}>
-            <Text style={cardStyles.name}>Name: </Text>
+            <Text style={cardStyles.name}>{t("name")}: </Text>
             <Text style={cardStyles.name} numberOfLines={1}>
               {name}
             </Text>
           </View>
         </View>
         <View>
-          <Text style={cardStyles.data}>Season: </Text>
+          <Text style={cardStyles.data}>{t("season")}: </Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -57,14 +58,14 @@ const OutfitItem = ({
           >
             {season.map((s) => (
               <Text style={cardStyles.chirp} key={s}>
-                {s}
+                {t(s)}
               </Text>
             ))}
           </ScrollView>
         </View>
 
         <View>
-          <Text style={cardStyles.data}>Clothes: </Text>
+          <Text style={cardStyles.data}>{t("clothes")}: </Text>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}

@@ -7,6 +7,7 @@ import { getWishlist } from "@/features/wishlist/requests";
 import { useFocusEffect } from "@react-navigation/native";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 import { useCallback, useRef, useState } from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../styles/global";
@@ -121,7 +122,10 @@ export default function WishlistScreen() {
   return (
     <SafeAreaProvider style={[styles.container, styles.bg]}>
       <SafeAreaView style={[styles.main, { marginVertical: 40 }]}>
-        <ModalButton text="Filters" fn={() => setFilterModalVisible(true)} />
+        <ModalButton
+          text={t("filters")}
+          fn={() => setFilterModalVisible(true)}
+        />
 
         <FilterModal
           modalVisible={filterModalVisible}
@@ -138,7 +142,7 @@ export default function WishlistScreen() {
         <WishlistView items={items} isFetching={isFetching} />
 
         <ModalButton
-          text="+ Add to wishlist"
+          text={"+ " + t("add_to_wishlist")}
           fn={() => setAddModalVisible(true)}
         />
 

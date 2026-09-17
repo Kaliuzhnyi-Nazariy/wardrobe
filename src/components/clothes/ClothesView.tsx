@@ -1,12 +1,13 @@
 import { styles } from "@/app/styles/global";
 import { Season, Size } from "@/features/clothes/interface";
 import { Link } from "expo-router";
+import { t } from "i18next";
 import React from "react";
 import { ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Loading from "../Loading/Loading";
 import ClothesItem from "./ClothesItem";
 import { clothesStyles } from "./style";
-import Loading from "../Loading/Loading";
 
 export interface IClothesItem {
   _id: string;
@@ -37,7 +38,7 @@ function ClothesView({
   if (!data || data.length === 0) {
     return (
       <View style={[styles.container, styles.bg]}>
-        <Text>No clothes added</Text>
+        <Text style={styles.noDataMesssage}>{t("no_clothes_added")}</Text>
       </View>
     );
   }

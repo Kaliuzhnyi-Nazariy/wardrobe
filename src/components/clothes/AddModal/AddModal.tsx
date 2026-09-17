@@ -8,6 +8,7 @@ import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
 import { useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 import { useState } from "react";
 import Toast from "react-native-toast-message";
 import Brand from "./Brand";
@@ -123,8 +124,13 @@ const AddModal = ({
       modalVisible={modalVisible}
       setModalVisible={setModalVisible}
     >
-      <AddModalLayout title="Add clothes item">
-        <Name name={name} setName={setName} loadingState={isPending} />
+      <AddModalLayout title={t("add_clothes_item")}>
+        <Name
+          title={t("name")}
+          name={name}
+          setName={setName}
+          loadingState={isPending}
+        />
         <Colors
           loadingState={isPending}
           setColors={setColor}
@@ -149,7 +155,7 @@ const AddModal = ({
         <Brand loadingState={isPending} brand={brand} setBrand={setBrand} />
         <Sizes loadingState={isPending} size={size} setSize={setSize} />
         <Name
-          title="Link to store"
+          title={t("store_link")}
           name={linkToStore}
           setName={setLinkToStore}
           placeholder="Enter the link"

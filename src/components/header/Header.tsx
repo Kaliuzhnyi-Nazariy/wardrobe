@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import { t } from "i18next";
 import React from "react";
 import { Text, View } from "react-native";
 import { headerStyles } from "./style";
@@ -10,7 +11,7 @@ const Header = ({ title, link }: { title: string; link?: string }) => {
       {!!link && (
         <Link href={link as any} style={[headerStyles.headerLink]}>
           <Ionicons name="arrow-back-outline" size={16} />
-          <Text style={[headerStyles.headerText]}>Back</Text>
+          <Text style={[headerStyles.headerText]}>{t("back")}</Text>
         </Link>
       )}
 

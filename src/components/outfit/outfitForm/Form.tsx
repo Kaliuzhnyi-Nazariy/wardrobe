@@ -9,6 +9,7 @@ import { Season } from "@/features/clothes/interface";
 import { IValidationError } from "@/helpers/interface";
 import { Image } from "expo-image";
 import { ImagePickerAsset } from "expo-image-picker";
+import { t } from "i18next";
 import { useEffect, useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import ChooseClothes from "../ChooseClothes";
@@ -77,38 +78,6 @@ const Form = ({
     }
   }, [data]);
 
-  // const client = useQueryClient();
-
-  // const param = data._id;
-
-  // const { mutate: updateOutfitFn } = useMutation({
-  //   mutationFn: (newData: FormData) =>
-  //     updateOutfit({ data: newData, id: data._id }),
-
-  //   onSuccess() {
-  //     client.invalidateQueries({ queryKey: ["getOutfitById", param] });
-  //   },
-  // });
-  //
-  // const {
-  //   outfit_season: searchSeason,
-  //   outfit_name: searchName,
-  //   clothes: searchClothes,
-  // } = useLocalSearchParams<{
-  //   outfit_season?: string;
-  //   outfit_name?: string;
-  //   clothes?: string;
-  // }>();
-
-  // const { mutate: deleteOutfit } = useMutation({
-  //   mutationFn: () => deleteOutfirById(data._id),
-  //   onSuccess() {
-  //     router.replace("/(tabs)/fits");
-  //     client.invalidateQueries({
-  //       queryKey: ["getOutfits", searchSeason, searchName, searchClothes],
-  //     });
-  //   },
-  // });
   const isSubmitUnable = !name || season.length == 0 || clothes.length == 0;
 
   const handleUpdate = () => {
@@ -182,17 +151,22 @@ const Form = ({
           </>
         )}
 
-        <InfoItem data={name} label="Name" mode={mode!} setData={setName} />
+        <InfoItem
+          data={name}
+          label={t("name")}
+          mode={mode!}
+          setData={setName}
+        />
         {mode === "review" ? (
           <View style={{ width: "100%", marginTop: 16 }}>
-            <Text style={styles.inputName}>Season</Text>
+            <Text style={styles.inputName}>{t("season")}</Text>
             <View style={outfitStyle.list}>
               {season.map((item, index) => (
                 <View
                   key={index}
                   style={[outfitStyle.tag, outfitStyle.tagClothesOwned]}
                 >
-                  <Text style={outfitStyle.tagText}>{item}</Text>
+                  <Text style={outfitStyle.tagText}>{t(item)}</Text>
                 </View>
               ))}
             </View>
@@ -209,11 +183,11 @@ const Form = ({
           <>
             {clothes.length === 0 ? (
               <View>
-                <Text>No clothes</Text>
+                <Text style={{textAlign: "center"}}>{t("no_clothes_added")}</Text>
               </View>
             ) : (
               <View style={{ width: "100%", marginTop: 16 }}>
-                <Text style={styles.inputName}>Clothes</Text>
+                <Text style={styles.inputName}>{t("clothes")}</Text>
                 <View style={outfitStyle.list}>
                   {clothes.map((c) => {
                     return (
@@ -264,7 +238,7 @@ const Form = ({
             }}
           >
             <Text style={addToWardrobeButton.addToWardrobeButtonText}>
-              Add to wardrobe
+              {t("add_to_wardrobe")}
             </Text>
           </Pressable>
         )}

@@ -1,4 +1,5 @@
 import { styles } from "@/app/styles/global";
+import { t } from "i18next";
 import { Text, TextInput, View } from "react-native";
 
 const Brand = ({
@@ -12,7 +13,7 @@ const Brand = ({
 }) => {
   return (
     <View style={{ marginTop: 16 }}>
-      <Text style={styles.inputName}>Brand</Text>
+      <Text style={styles.inputName}>{t("brand")}</Text>
       <TextInput
         accessible={!loadingState}
         style={[styles.input, { marginTop: 4 }]}

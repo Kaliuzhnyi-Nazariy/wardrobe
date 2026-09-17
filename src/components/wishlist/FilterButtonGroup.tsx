@@ -1,3 +1,4 @@
+import { t } from "i18next";
 import { Pressable, Text, View } from "react-native";
 import { filterButtonStyles } from "./style";
 
@@ -27,7 +28,7 @@ const FilterButtonGroup = ({
             isClothesOnly && filterButtonStyles.buttonTextChosen,
           ]}
         >
-          Clothes
+          {t("clothes")}
         </Text>
       </Pressable>
       <Pressable
@@ -43,7 +44,7 @@ const FilterButtonGroup = ({
             isOutfitsOnly && filterButtonStyles.buttonTextChosen,
           ]}
         >
-          Outfits
+          {t("outfits")}
         </Text>
       </Pressable>
     </View>

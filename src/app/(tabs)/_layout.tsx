@@ -69,12 +69,11 @@ import { getData } from "@/features/user/requests";
 import { Ionicons } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { Tabs } from "expo-router";
+import { t } from "i18next";
 import { ActivityIndicator, View } from "react-native";
-import { colors } from "../styles/global"; // upewnij się, że ścieżka do styles jest poprawna
+import { colors } from "../styles/global";
 
 export default function TabLayout() {
-  // Pobieramy ten sam query klucz. TanStack Query współdzieli stan,
-  // więc nie wywoła to podwójnego zapytania do API.
   const { isFetching } = useQuery({
     queryKey: ["userData"],
     queryFn: getData,
@@ -96,7 +95,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="home"
           options={{
-            title: "Home",
+            title: t("home"),
             tabBarIcon: ({ color }) => (
               <Ionicons name="home" size={20} color={color} />
             ),
@@ -106,7 +105,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="clothes"
           options={{
-            title: "Clothes",
+            title: t("clothes"),
             tabBarIcon: ({ color }) => (
               <Ionicons name="shirt" size={20} color={color} />
             ),
@@ -115,7 +114,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="fits"
           options={{
-            title: "Outfits",
+            title: t("outfits"),
             tabBarIcon: ({ color }) => (
               <Ionicons name="body" size={20} color={color} />
             ),
@@ -124,7 +123,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="wishlist"
           options={{
-            title: "Wish list",
+            title: t("wishlist"),
             tabBarIcon: ({ color }) => (
               <Ionicons name="heart" size={20} color={color} />
             ),
@@ -133,7 +132,7 @@ export default function TabLayout() {
         <Tabs.Screen
           name="account"
           options={{
-            title: "Account",
+            title: t("account"),
             tabBarIcon: ({ color }) => (
               <Ionicons name="person" size={20} color={color} />
             ),
@@ -141,32 +140,10 @@ export default function TabLayout() {
         />
       </Tabs>
 
-      {/* Ekran ładowania renderowany NAD strukturą Tabs */}
       {isFetching && (
-        <View
-          style={[
-            // styles.container,
-            // styles.bg,
-            // {
-            //   position: "absolute",
-            //   left: 0,
-            //   top: 0,
-            //   right: 0,
-            //   bottom: 0,
-            //   zIndex: 99,
-            //   justifyContent: "center",
-            //   alignItems: "center",
-            //   backgroundColor: "rgba(255,255,255,0.9)", // Opcjonalnie: półprzezroczyste tło, jeśli chcesz widzieć zablokowany interfejs w tle
-            // },
-            loadingStyles.generalLoading,
-          ]}
-        >
+        <View style={[loadingStyles.generalLoading]}>
           <ActivityIndicator size="large" color={colors.primary} />
-          {/* <Text style={{ marginTop: 12, fontSize: 16, color: "#555" }}>
-            Loading your dashboard...
-          </Text> */}
         </View>
-        // <Loading />
       )}
     </View>
   );

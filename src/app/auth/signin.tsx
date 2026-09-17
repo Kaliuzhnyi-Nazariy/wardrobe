@@ -3,9 +3,11 @@ import { ISignIn } from "@/features/auth/interface";
 import { signin } from "@/features/auth/request";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { Ionicons } from "@expo/vector-icons";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Link, router } from "expo-router";
+import { t } from "i18next";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Pressable, Text, TextInput, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { colors, styles } from "../styles/global";
@@ -16,7 +18,6 @@ export default function Signin() {
   const [password, setPassword] = useState("");
   const [hidePassword, setHidePassword] = useState(true);
 
-  const queryClient = useQueryClient();
   const { messages, setError, clearErrors } = useErrorHandler();
 
   const { mutate: signinFn, isPending } = useMutation({
@@ -64,11 +65,17 @@ export default function Signin() {
 
   const isValid = email.length > 0 && password.length >= 8;
 
-  // console.log({ isValid });
+  const { i18n } = useTranslation();
+
+  // console.log("Aktualny język to:", i18n.language);
+
+  const lang = i18n.language;
 
   return (
     <View style={[styles.main, authStyles.page]}>
-      <Text style={styles.h1}>SIGN IN</Text>
+      <Text style={[lang == "pl" ? styles.h1_big : styles.h1]}>
+        {t("sign_in")}
+      </Text>
       <View style={authStyles.form}>
         <View style={authStyles.field}>
           <Text style={styles.inputName}>Email</Text>
@@ -87,7 +94,7 @@ export default function Signin() {
           />
         </View>
         <View style={authStyles.field && authStyles.passwordField}>
-          <Text style={styles.inputName}>Password</Text>
+          <Text style={styles.inputName}>{t("password")}</Text>
           {/* <Text style={authStyles.inputName}>Password</Text> */}
           <TextInput
             value={password}
@@ -137,7 +144,7 @@ export default function Signin() {
                   pressed && authStyles.buttonTextPressed,
                 ]}
               >
-                Sign in
+                {t("sign_in")}
               </Text>
             )}
           </Pressable>
@@ -164,9 +171,10 @@ export default function Signin() {
         <ErrorMessages messages={messages} />
 
         <Text style={authStyles.linkMessage}>
-          You don't have an account?{" "}
+          {/* You don't have an account?{" "} */}
+          {t("signup_message")}
           <Link href="/auth/signup" style={authStyles.link}>
-            Sign up!
+            {t("sign_up")}!
           </Link>
         </Text>
       </View>

@@ -1,4 +1,5 @@
 import { styles } from "@/app/styles/global";
+import { t } from "i18next";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import ModalComponent from "./ModalComponent";
@@ -29,7 +30,8 @@ const FilterModalComponent = ({
       setModalVisible={setModalVisible}
       extraStyles={extraStyle}
     >
-      <Text style={filtersModalStyles.header}>Filters</Text>
+      <Text style={filtersModalStyles.header}>{t("filters")}</Text>
+      {/* <Text style={filtersModalStyles.header}>Filters</Text> */}
       {children}
       <View style={filtersModalStyles.buttonGroup}>
         <Pressable
@@ -49,7 +51,7 @@ const FilterModalComponent = ({
                 pressed && filtersModalStyles.resetTextPressed,
               ]}
             >
-              Reset filters
+              {t("reset_filters")}
             </Text>
           )}
         </Pressable>
@@ -64,7 +66,7 @@ const FilterModalComponent = ({
             pressed && filtersModalStyles.applyPressed,
           ]}
         >
-          <Text>Apply filters</Text>
+          <Text>{t("apply_filter")}</Text>
         </Pressable>
       </View>
       <Pressable
@@ -83,7 +85,8 @@ const FilterModalComponent = ({
               pressed && filtersModalStyles.buttonCloseTextPressed,
             ]}
           >
-            Close
+            {t("close")}
+            {/* Close */}
           </Text>
         )}
       </Pressable>
