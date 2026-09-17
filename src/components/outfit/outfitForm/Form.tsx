@@ -183,7 +183,9 @@ const Form = ({
           <>
             {clothes.length === 0 ? (
               <View>
-                <Text style={{textAlign: "center"}}>{t("no_clothes_added")}</Text>
+                <Text style={{ textAlign: "center" }}>
+                  {t("no_clothes_added")}
+                </Text>
               </View>
             ) : (
               <View style={{ width: "100%", marginTop: 16 }}>
@@ -221,6 +223,7 @@ const Form = ({
           handleModeChange={() => handleModeChange && handleModeChange()}
           handleUpdate={handleUpdate}
           mode={mode!}
+          loadingState={loadingState}
           isAble={!isSubmitUnable}
         />
 

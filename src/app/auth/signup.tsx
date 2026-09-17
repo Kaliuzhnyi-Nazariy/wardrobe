@@ -45,7 +45,7 @@ export default function Signup() {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Welcome!",
+        text1: t("welcome"),
         position: "top",
         visibilityTime: 3000,
       });

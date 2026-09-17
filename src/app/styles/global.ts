@@ -32,8 +32,8 @@ export const styles = StyleSheet.create({
   h1: {
     color: colors.primary,
     fontWeight: "bold",
-    fontSize: 72,
-
+    fontSize: 64,
+    textAlign: "center",
     textTransform: "uppercase",
   },
   h1_big: {

@@ -15,7 +15,7 @@ const HomeView = (data: {
         <Text
           style={[
             styles.h1,
-            { textTransform: "uppercase", fontSize: 60, textAlign: "center" },
+            { textTransform: "uppercase", fontSize: 56, textAlign: "center" },
           ]}
         >
           Wardrobe

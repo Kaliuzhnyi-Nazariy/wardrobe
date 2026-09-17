@@ -229,6 +229,7 @@ const Form = ({
           handleModeChange={() => handleModeChange && handleModeChange()}
           handleUpdate={handleUpdate}
           mode={mode!}
+          loadingState={loadingState}
           isAble={!isSubmitUnable}
         />
 
@@ -242,7 +243,7 @@ const Form = ({
             }}
           >
             <Text style={addToWardrobeButton.addToWardrobeButtonText}>
-              {t('add_to_wardrobe')}
+              {t("add_to_wardrobe")}
             </Text>
           </Pressable>
         )}

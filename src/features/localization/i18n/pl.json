@@ -77,5 +77,22 @@
   "save": "Zapisz",
   "no_clothes_added": "Twoja szafa jest pusta. Dodaj swój pierwszy element garderoby!",
   "no_outfits_added": "Nie utworzono jeszcze żadnych stylizacji. Połącz ubrania w gotowe zestawy!",
-  "no_wishlist_added": "Twoja lista życzeń jest pusta. Zapisuj tutaj rzeczy, które planujesz kupić!"
+  "no_wishlist_added": "Twoja lista życzeń jest pusta. Zapisuj tutaj rzeczy, które planujesz kupić!",
+
+  "welcome": "Witaj ponownie!",
+
+  "all_clothes_removed": "Usunięto wszystkie ubrania",
+  "clothes_updated": "Uaktualniono ubranie",
+  "clothes_removed": "Usunięto ubranie",
+  "clothes_added": "Dodano do szafy!",
+
+  "all_outfits_removed": "Usunięto wszystkie stylizacje",
+  "outfit_updated": "Uaktualniono stylizację",
+  "outfit_removed": "Usunięto stylizację",
+  "outfit_added": "Utworzono stylizację!",
+
+  "successfully_moved": "Przeniesiono pomyślnie!",
+
+  "password_changed": "Hasło zostało zmienione",
+  "data_updated": "Profil zaktualizowany"
 }

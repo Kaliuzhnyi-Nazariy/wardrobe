@@ -19,7 +19,8 @@ export default function Account() {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Clothes are removed!",
+        text1: t("all_clothes_removed"),
+        // text1: "Clothes are removed!",
         position: "top",
         visibilityTime: 3000,
       });
@@ -38,7 +39,7 @@ export default function Account() {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Outfis are removed!",
+        text1: t("all_outfits_removed"),
         position: "top",
         visibilityTime: 3000,
       });
@@ -96,7 +97,14 @@ export default function Account() {
   };
 
   return (
-    <View style={[styles.bg, styles.container, { marginVertical: 60 }]}>
+    <ScrollView
+      // style={[{ marginVertical: 60 }]}
+      contentContainerStyle={[
+        styles.bg,
+        styles.container,
+        { marginVertical: 60 },
+      ]}
+    >
       <View style={accountStyles.accHeader}>
         <Text style={accountStyles.accHeaderText}>{t("account")}</Text>
         {/* <Text style={accountStyles.accHeaderText}>Account</Text> */}
@@ -148,6 +156,6 @@ export default function Account() {
 
         {/* <Text>Account buttons</Text> */}
       </ScrollView>
-    </View>
+    </ScrollView>
   );
 }

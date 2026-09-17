@@ -40,7 +40,7 @@ const AddModal = ({
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Outfit is added!",
+        text1: t("outfit_added"),
         position: "top",
         visibilityTime: 3000,
       });
