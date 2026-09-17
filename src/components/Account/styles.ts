@@ -33,10 +33,10 @@ export const accountStyles = StyleSheet.create({
     flexDirection: "column",
     gap: 16,
 
-    flex: 1,
+    // flex: 1,
     width: "80%",
     alignItems: "center",
     marginHorizontal: "auto",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
   },
 });

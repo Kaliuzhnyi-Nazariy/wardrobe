@@ -20,7 +20,6 @@ export default function Account() {
       Toast.show({
         type: "success",
         text1: t("all_clothes_removed"),
-        // text1: "Clothes are removed!",
         position: "top",
         visibilityTime: 3000,
       });
@@ -77,7 +76,7 @@ export default function Account() {
       }, 0);
     },
     onError(err) {
-      Toast.show({
+      ({
         type: "error",
         text1: err.message,
       });
@@ -97,14 +96,7 @@ export default function Account() {
   };
 
   return (
-    <ScrollView
-      // style={[{ marginVertical: 60 }]}
-      contentContainerStyle={[
-        styles.bg,
-        styles.container,
-        { marginVertical: 60 },
-      ]}
-    >
+    <View style={[styles.bg, styles.container, { marginVertical: 60 }]}>
       <View style={accountStyles.accHeader}>
         <Text style={accountStyles.accHeaderText}>{t("account")}</Text>
         {/* <Text style={accountStyles.accHeaderText}>Account</Text> */}
@@ -150,12 +142,14 @@ export default function Account() {
         </View>
 
         <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
+          <Text style={styles.inputName}>{t("account_actions")}</Text>
+
           <AccButton text={t("logout")} fn={logoutFn} />
           <AccButton text={t("delete_account")} fn={deleteAccount} />
         </View>
 
         {/* <Text>Account buttons</Text> */}
       </ScrollView>
-    </ScrollView>
+    </View>
   );
 }

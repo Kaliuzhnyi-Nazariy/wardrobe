@@ -94,5 +94,7 @@
   "successfully_moved": "Moved successfully!",
 
   "password_changed": "Password changed",
-  "data_updated": "Profile updated"
+  "data_updated": "Profile updated",
+
+  "account_actions": "Account actions"
 }
