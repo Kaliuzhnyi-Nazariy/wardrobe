@@ -8,6 +8,7 @@ import { Pressable, Text, TextInput, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { authStyles } from "../auth/auth";
 import { colors, styles } from "../styles/global";
+import { t } from "i18next";
 
 const changePassword = () => {
   const [password, setPassword] = useState("");
@@ -27,7 +28,7 @@ const changePassword = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Password is changed!",
+        text1: t("password_changed"),
         position: "top",
         visibilityTime: 3000,
       });

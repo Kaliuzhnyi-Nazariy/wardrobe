@@ -1,5 +1,6 @@
 import Form from "@/components/clothes/ClothesForm/Form";
 import Header from "@/components/header/Header";
+import Loading from "@/components/Loading/Loading";
 import OutfitForm from "@/components/outfit/outfitForm/Form";
 import { deleteClothes, updateClothes } from "@/features/clothes/request";
 import { deleteOutfirById, updateOutfit } from "@/features/outfit/requests";
@@ -10,11 +11,11 @@ import {
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { styles } from "../styles/global";
-import Loading from "@/components/Loading/Loading";
 
 const WishlistItemData = () => {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -52,7 +53,7 @@ const WishlistItemData = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Outfit updated!",
+        text1: t("outfit_updated"),
         position: "top",
         visibilityTime: 3000,
       });
@@ -83,7 +84,7 @@ const WishlistItemData = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Outfit removed!",
+        text1: t("outfit_removed"),
         position: "top",
         visibilityTime: 3000,
       });
@@ -118,7 +119,7 @@ const WishlistItemData = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Clothes item updated!",
+        text1: t("clothes_updated"),
         position: "top",
         visibilityTime: 3000,
       });
@@ -138,7 +139,7 @@ const WishlistItemData = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Clothes item removed!",
+        text1: t("clothes_removed"),
         position: "top",
         visibilityTime: 3000,
       });
@@ -159,7 +160,7 @@ const WishlistItemData = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Successfully moveds!",
+        text1: t("successfully_moved"),
         position: "top",
         visibilityTime: 3000,
       });

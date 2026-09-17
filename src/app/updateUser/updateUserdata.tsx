@@ -4,6 +4,7 @@ import { updateUserData } from "@/features/user/requests";
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { router } from "expo-router";
+import { t } from "i18next";
 import React, { useEffect, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import Toast from "react-native-toast-message";
@@ -35,7 +36,7 @@ const updateUserdata = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Data is updated!",
+        text1: t("data_updated"),
         position: "top",
         visibilityTime: 3000,
       });

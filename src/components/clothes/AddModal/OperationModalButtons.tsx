@@ -19,7 +19,7 @@ const OperationModalButtons = ({
   return (
     <View style={buttonStyles.buttonGroup}>
       {loadingState ? (
-        <Text style={{ marginHorizontal: "auto" }}>Loaading</Text>
+        <Text style={{ marginHorizontal: "auto" }}>Loading</Text>
       ) : (
         <>
           <Pressable

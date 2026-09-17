@@ -69,7 +69,7 @@ export const ChooseClothesInOutfit = ({
       ]);
       Toast.show({
         type: "success",
-        text1: "Clothes item is added!",
+        text1: t("clothes_added"),
         position: "top",
         visibilityTime: 3000,
       });

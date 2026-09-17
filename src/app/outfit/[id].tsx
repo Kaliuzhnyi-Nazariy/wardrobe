@@ -1,4 +1,5 @@
 import Header from "@/components/header/Header";
+import Loading from "@/components/Loading/Loading";
 import Form from "@/components/outfit/outfitForm/Form";
 import {
   deleteOutfirById,
@@ -8,11 +9,11 @@ import {
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Toast from "react-native-toast-message";
 import { styles } from "../styles/global";
-import Loading from "@/components/Loading/Loading";
 
 const OutfitById = () => {
   const { id } = useLocalSearchParams();
@@ -33,6 +34,12 @@ const OutfitById = () => {
       updateOutfit({ data: newData, id: param }),
 
     onSuccess() {
+      Toast.show({
+        type: "success",
+        text1: t("outfit_updated"),
+        position: "top",
+        visibilityTime: 3000,
+      });
       client.invalidateQueries({ queryKey: ["getOutfitById", param] });
       updateMode();
     },
@@ -56,7 +63,7 @@ const OutfitById = () => {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Outfit removed!",
+        text1: t("outfit_removed"),
         position: "top",
         visibilityTime: 3000,
       });

@@ -77,5 +77,22 @@
   "save": "Save",
   "no_clothes_added": "Your wardrobe is empty. Add your first clothing item!",
   "no_outfits_added": "No outfits created yet. Combine your clothes into stylish looks!",
-  "no_wishlist_added": "Your wishlist is empty. Save items you plan to buy here!"
+  "no_wishlist_added": "Your wishlist is empty. Save items you plan to buy here!",
+
+  "welcome": "Welcome back!",
+
+  "all_clothes_removed": "All clothes removed",
+  "clothes_updated": "Item updated",
+  "clothes_removed": "Item removed",
+  "clothes_added": "Added to wardrobe!",
+
+  "all_outfits_removed": "All outfits removed",
+  "outfit_updated": "Outfit updated",
+  "outfit_removed": "Outfit removed",
+  "outfit_added": "Outfit created!",
+
+  "successfully_moved": "Moved successfully!",
+
+  "password_changed": "Password changed",
+  "data_updated": "Profile updated"
 }

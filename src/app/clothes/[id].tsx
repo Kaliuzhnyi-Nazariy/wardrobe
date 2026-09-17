@@ -10,8 +10,9 @@ import {
 import { useErrorHandler } from "@/hooks/useErrorHandler";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { router, useLocalSearchParams } from "expo-router";
+import { t } from "i18next";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import Toast from "react-native-toast-message";
 
 export default function ClothingItemScreen() {
@@ -63,7 +64,7 @@ export default function ClothingItemScreen() {
       handleModeChange();
       Toast.show({
         type: "success",
-        text1: "Clothes item updated!",
+        text1: t("clothes_updated"),
         position: "top",
         visibilityTime: 3000,
       });
@@ -80,7 +81,7 @@ export default function ClothingItemScreen() {
     onSuccess() {
       Toast.show({
         type: "success",
-        text1: "Clothes item removed!",
+        text1: t("clothes_removed"),
         position: "top",
         visibilityTime: 3000,
       });
