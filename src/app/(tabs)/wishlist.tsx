@@ -110,9 +110,9 @@ export default function WishlistScreen() {
 
   const updateOutfitsParam = () => {
     if (isOutfitsOnly) {
-      router.setParams({ clothes: "true", outfits: "true" });
+      router.setParams({ clothes: "true", outfit: "true" });
     } else {
-      router.setParams({ clothes: "false", outfits: "true" });
+      router.setParams({ clothes: "false", outfit: "true" });
     }
   };
 
