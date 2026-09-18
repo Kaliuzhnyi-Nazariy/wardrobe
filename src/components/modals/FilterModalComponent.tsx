@@ -66,7 +66,7 @@ const FilterModalComponent = ({
             pressed && filtersModalStyles.applyPressed,
           ]}
         >
-          <Text>{t("apply_filter")}</Text>
+          <Text style={{ textAlign: "center" }}>{t("apply_filter")}</Text>
         </Pressable>
       </View>
       <Pressable
