@@ -3,12 +3,12 @@ import { updateUserPassword } from "@/features/user/requests";
 import { Ionicons } from "@expo/vector-icons";
 import { useMutation } from "@tanstack/react-query";
 import { router } from "expo-router";
+import { t } from "i18next";
 import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import Toast from "react-native-toast-message";
 import { authStyles } from "../auth/auth";
 import { colors, styles } from "../styles/global";
-import { t } from "i18next";
 
 const changePassword = () => {
   const [password, setPassword] = useState("");
@@ -23,7 +23,7 @@ const changePassword = () => {
 
   const validation = password.length > 0 && confirmPassword.length > 0;
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => updateUserPassword({ password, confirmPassword }),
     onSuccess() {
       Toast.show({
@@ -46,14 +46,11 @@ const changePassword = () => {
           width: "100%",
           flexDirection: "column",
           gap: 16,
-          // justifyContent: "center",
-          // alignItems: "center",
         }}
       >
-        <Text style={styles.headerForUpdPages}>Change password</Text>
+        <Text style={styles.headerForUpdPages}>{t("change_password")}</Text>
         <View style={authStyles.field && authStyles.passwordField}>
-          <Text style={styles.inputName}>Password</Text>
-          {/* <Text style={authStyles.inputName}>Password</Text> */}
+          <Text style={styles.inputName}>{t("password")}</Text>
           <TextInput
             value={password}
             onChangeText={setPassword}
@@ -76,7 +73,7 @@ const changePassword = () => {
           </Pressable>
         </View>
         <View style={authStyles.field && authStyles.passwordField}>
-          <Text style={styles.inputName}>Confirm password</Text>
+          <Text style={styles.inputName}>{t("confirm_password")}</Text>
           {/* <Text style={authStyles.inputName}>Confirm password</Text> */}
           <TextInput
             value={confirmPassword}
@@ -100,17 +97,21 @@ const changePassword = () => {
           </Pressable>
         </View>
 
-        <Pressable
-          disabled={!validation}
-          style={[
-            styles.button,
-            updateBtn.updBtn,
-            !validation && { opacity: 0.5 },
-          ]}
-          onPress={() => mutate()}
-        >
-          <Text style={{ color: "white", fontWeight: 700 }}>Update</Text>
-        </Pressable>
+        {isPending ? (
+          <Text style={{ textAlign: "center" }}>Loading</Text>
+        ) : (
+          <Pressable
+            disabled={!validation}
+            style={[
+              styles.button,
+              updateBtn.updBtn,
+              !validation && { opacity: 0.5 },
+            ]}
+            onPress={() => mutate()}
+          >
+            <Text style={{ color: "white", fontWeight: 700 }}>Update</Text>
+          </Pressable>
+        )}
       </View>
     </View>
   );

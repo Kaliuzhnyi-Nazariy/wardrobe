@@ -89,6 +89,7 @@ export const addToWardrobeButton = StyleSheet.create({
   addToWardrobeButtonText: {
     color: colors.secondary,
     fontWeight: 700,
+    textAlign: "center",
   },
 });
 

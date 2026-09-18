@@ -31,7 +31,7 @@ const updateUserdata = () => {
 
   const { messages, setError, clearErrors } = useErrorHandler();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => updateUserData({ name, email }),
     onSuccess() {
       Toast.show({
@@ -60,7 +60,7 @@ const updateUserdata = () => {
 
   return (
     <View style={[styles.bg, styles.main, { gap: 16 }]}>
-      <Text style={styles.headerForUpdPages}>Update user data</Text>
+      <Text style={styles.headerForUpdPages}>{t("update_data")}</Text>
       <View
         style={{
           width: "100%",
@@ -69,7 +69,7 @@ const updateUserdata = () => {
           gap: 8,
         }}
       >
-        <Text style={styles.inputName}>Name: </Text>
+        <Text style={styles.inputName}>{t("user_name")}: </Text>
         <TextInput
           value={name}
           onChangeText={setName}
@@ -97,21 +97,24 @@ const updateUserdata = () => {
           autoCapitalize="none"
         />
       </View>
-      <Pressable
-        disabled={!validation}
-        style={[
-          styles.button,
-          updateBtn.updBtn,
-          !validation && { opacity: 0.5 },
-        ]}
-        onPress={() => {
-          clearErrors();
-          mutate();
-        }}
-      >
-        <Text style={{ color: "white", fontWeight: 700 }}>Update</Text>
-      </Pressable>
-
+      {isPending ? (
+        <Text style={{ textAlign: "center" }}>Loading...</Text>
+      ) : (
+        <Pressable
+          disabled={!validation}
+          style={[
+            styles.button,
+            updateBtn.updBtn,
+            !validation && { opacity: 0.5 },
+          ]}
+          onPress={() => {
+            clearErrors();
+            mutate();
+          }}
+        >
+          <Text style={{ color: "white", fontWeight: 700 }}>{t("update")}</Text>
+        </Pressable>
+      )}
       <ErrorMessages mt={16} messages={messages} />
     </View>
   );
