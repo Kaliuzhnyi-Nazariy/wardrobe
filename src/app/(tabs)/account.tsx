@@ -103,7 +103,7 @@ export default function Account() {
       </View>
       <ScrollView
         style={{ flex: 1, width: "100%" }}
-        contentContainerStyle={accountStyles.accView}
+        contentContainerStyle={[accountStyles.accView, , { paddingBottom: 80 }]}
       >
         <View style={{ width: "100%", flexDirection: "column", gap: 16 }}>
           <Text style={styles.inputName}>{t("wardrobe")}</Text>
