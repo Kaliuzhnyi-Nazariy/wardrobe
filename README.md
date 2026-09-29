@@ -4,7 +4,7 @@ A simple, user-friendly mobile application designed to help you organize your wa
 
 ## Download
 
-[Insert download link here]
+[Download APK](https://expo.dev/accounts/nazariikls-team/projects/dashboard/builds/37f72898-2050-4b2a-a147-a0d03361b8a8)
 
 ---
 
