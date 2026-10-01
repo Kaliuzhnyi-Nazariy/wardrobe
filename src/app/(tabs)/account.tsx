@@ -96,7 +96,7 @@ export default function Account() {
   };
 
   return (
-    <View style={[styles.bg, styles.container, { marginVertical: 60 }]}>
+    <View style={[styles.bg, styles.container, { marginTop: 60 }]}>
       <View style={accountStyles.accHeader}>
         <Text style={accountStyles.accHeaderText}>{t("account")}</Text>
         {/* <Text style={accountStyles.accHeaderText}>Account</Text> */}
