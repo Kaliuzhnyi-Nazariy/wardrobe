@@ -38,5 +38,6 @@ export const accountStyles = StyleSheet.create({
     alignItems: "center",
     marginHorizontal: "auto",
     // justifyContent: "space-between",
+    paddingBottom: 40,
   },
 });

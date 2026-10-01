@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import FilterModalComponent from "../modals/FilterModalComponent";
 import { filtersModalStyles } from "../modals/style";
+import Sizes from "./AddModal/Sizes";
 import { clothesStyles } from "./style";
 
 interface FiltersModalProps {
@@ -15,7 +16,8 @@ interface FiltersModalProps {
 
 const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
   const seasons = ["winter", "spring", "summer", "fall"] as const;
-  const sizes = ["s", "m", "l", "xl", "2xl", "3xl"] as const;
+  const sizes: Size[] = ["s", "m", "l", "xl", "2xl", "3xl"] as const;
+  // const sizes = ["s", "m", "l", "xl", "2xl", "3xl"] as const;
 
   const [season, setSeason] = useState<Season[]>([]);
   const [name, setName] = useState<string>("");
@@ -153,7 +155,9 @@ const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
         />
       </View>
 
-      <View style={clothesStyles.field}>
+      <Sizes loadingState={false} setSize={setSizeParam} size={size} />
+
+      {/* <View style={clothesStyles.field}>
         <Text style={styles.inputName}>{t("size")}</Text>
         <View style={clothesStyles.sizesList}>
           {sizes.map((s) => {
@@ -179,7 +183,7 @@ const FiltersModal = ({ modalVisible, setModalVisible }: FiltersModalProps) => {
             );
           })}
         </View>
-      </View>
+      </View> */}
     </FilterModalComponent>
   );
 };
